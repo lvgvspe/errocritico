@@ -8,11 +8,11 @@ def create_post(name, content):
 
 def get_posts():
     res = db.fetch()
+    global posts
     posts = res.items
-    while res.last:
-        res = db.fetch(last=res.last)
-        posts += res.items
-    print (posts)
+    # while res.last:
+    #     res = db.fetch(last=res.last)
+    #     posts += res.items
 
 def delete_post(key):
     res = db.delete(key)
@@ -20,3 +20,4 @@ def delete_post(key):
 if __name__ == '__main__':
     # delete_post(key)
     get_posts()
+    print (posts)

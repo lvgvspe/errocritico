@@ -30,7 +30,9 @@ def home():
 
 @app.route ('/posts')
 def posts():
+    # models.get_posts()
     return render_template('posts.html')
 
 # if __name__ == '__main__':
-#     posts()
+    # posts()
+    # print (posts)
