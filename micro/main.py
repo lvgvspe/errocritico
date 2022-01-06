@@ -4,8 +4,8 @@ app = Flask(__name__)
 
 @app.route ('/')
 def ola():
-    return "Olá, mundo! Teste 2"
+    return "Erro crítico: em construção."
 
 @app.route ('/login')
 def adeus():
-    return render_template('index.html')
+    return render_template('login.html')
