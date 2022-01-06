@@ -4,7 +4,7 @@ db = deta.Base('simple_db')
 
 
 def create_post(name, content):
-    db.put(name, content)
+    db.put({'name':name, 'post': content})
 
 def get_posts():
     res = db.fetch()
@@ -12,4 +12,11 @@ def get_posts():
     while res.last:
         res = db.fetch(last=res.last)
         posts += res.items
-    return posts
+    print (posts)
+
+def delete_post(key):
+    res = db.delete(key)
+
+if __name__ == '__main__':
+    # delete_post(key)
+    get_posts()

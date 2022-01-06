@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
-from models import create_post, get_posts
+from deta import Deta
+import models
+
+deta = Deta('b09y7hmi_AFEApMypWh31wYJdM9JbkvjMMrvm5RKk')
+db = deta.Base('simple_db')
 
 app = Flask(__name__)
 
@@ -19,8 +23,14 @@ def home():
     if request.method == 'POST':
         name = request.form.get('name')
         post = request.form.get('post')
-        create_post(name, post)
-
-    posts = get_posts()
+        models.create_post(name, post)
+        
 
     return render_template('home.html')
+
+@app.route ('/posts')
+def posts():
+    return render_template('posts.html')
+
+# if __name__ == '__main__':
+#     posts()
