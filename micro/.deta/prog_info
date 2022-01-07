@@ -1,1 +1,0 @@
-{"id":"3a9d7e7c-eaae-44b6-a610-f9ddeddd12a1","space":14590,"runtime":"python3.9","name":"micro","path":"cdugu0","project":"b09y7hmi","account":"144798365827","region":"sa-east-1","deps":["click==8.0.3","Flask==2.0.2","itsdangerous==2.0.1","Jinja2==3.0.3","MarkupSafe==2.0.1","Werkzeug==2.0.2"],"envs":null,"public":true,"log_level":"debug","cron":""}
