@@ -13,6 +13,6 @@ def create_post(name, content):
 def get_posts():
     con = sql.connect(path.join(ROOT, 'database.db'))
     cur = con.cursor()
-    cur.execute('select * from posts)
+    cur.execute('select * from posts')
     posts = cur.fetchall()
     return posts
