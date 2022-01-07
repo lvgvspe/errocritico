@@ -28,11 +28,10 @@ def home():
 
     return render_template('home.html')
 
-@app.route ('/posts')
-def posts():
-    models.get_posts()
-    return posts
+@app.route ('/posts/<key>')
+def publi(key):
+    post=db.get(key)
+    return post if post else jsonify({"error": "not found"}, 404)
 
-# if __name__ == '__main__':
-    # posts()
-    # print (posts)
+if __name__ == '__main__':
+    publi()
