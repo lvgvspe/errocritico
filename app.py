@@ -16,7 +16,7 @@ def index():
         post = request.form.get('post')
         models.create_post(name, post)
 
-    posts=get_posts()
+    posts=models.get_posts()
         
 
     return render_template('index.html', posts=posts)

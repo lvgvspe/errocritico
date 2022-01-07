@@ -6,6 +6,8 @@
             <input placeholder='Post' name='post'>
             <input type='submit' value='Publicar'>
         </form>
-        <div></div>
+        {% for post in posts %}
+        <div>{{ post[1] + ': ' + post[2] }}</div>
+        {% endfor %}
     </body>
 </html>
