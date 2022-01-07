@@ -15,3 +15,4 @@ def get_posts():
     cur = con.cursor()
     cur.execute('select * from posts)
     posts = cur.fetchall()
+    return posts
