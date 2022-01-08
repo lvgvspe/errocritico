@@ -1,0 +1,12 @@
+Click
+dominate
+Flask
+Flask-Bootstrap
+Flask-Moment
+Flask-SQLAlchemy
+itsdangerous
+Jinja2
+MarkupSafe
+SQLAlchemy
+visitor
+Werkzeug
