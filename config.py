@@ -3,9 +3,9 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-	SECRET_KEY = os.environ.get(‘SECRET_KEY’, ‘secret’)
-	STREAM_API_KEY = ‘’#Insert your Stream API key her
-	STREAM_SECRET = ‘’#Insert your Stream Secret here
+	SECRET_KEY = os.environ.get('SECRET_KEY', 'secret' )
+	STREAM_API_KEY = ''#Insert your Stream API key her
+	STREAM_SECRET = ''#Insert your Stream Secret here
 
 	@staticmethod
 	def init_app(app):
@@ -13,26 +13,26 @@ class Config:
 
 class DevelopmentConfig(Config):
 	DEBUG = True
-	SQLALCHEMY_DATABASE_URI = os.environ.get(‘DEV_DATABASE_URL’) or \
-		‘sqlite:///’ + os.path.join(basedir, ‘data-dev.sqlite’)
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+		'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 
 class TestingConfig(Config):
 	TESTING = True
-	SQLALCHEMY_DATABASE_URI = os.environ.get(‘TEST_DATABASE_URL’) or \
-		‘sqlite://’
+	SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+		'sqlite://'
 	WTF_CSRF_ENABLED = False
 class ProductionConfig(Config):
-	SQLALCHEMY_DATABASE_URI = os.environ.get(‘DATABASE_URL’) or \
-		‘sqlite:///’ + os.path.join(basedir, ‘data/sqlite’)
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+		'sqlite:///' + os.path.join(basedir, 'data/sqlite')
 
 	@classmethod
 	def init_app(cls, app):
 		Config.init_app(app)
 
 config = {
-	‘development’: DevelopmentConfig,
-	‘testing’: TestingConfig,
-	‘production’: ProductionConfig,
+	'development': DevelopmentConfig,
+	'testing': TestingConfig,
+	'production': ProductionConfig,
 	
-	‘default’: DevelopmentConfig
+	'default': DevelopmentConfig
 } 
