@@ -96,3 +96,18 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+@bp.route('/<int:id>/userdelete', methods=('POST',))
+@login_required
+def delete(id, check_user=True):
+
+    if check_user and id != g.user['id']:
+        abort(403)
+
+    else:
+        db = get_db()
+        db.execute('DELETE FROM user WHERE id = ?', (id,))
+        db.commit()
+
+
+    return redirect(url_for('auth.login'))

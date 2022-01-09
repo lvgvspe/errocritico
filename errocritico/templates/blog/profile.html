@@ -16,5 +16,9 @@
         </div>
       </header>
     </article>
+  <hr>
+  <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
+    <input class="danger" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');">
+  </form>
 {% endfor %}
 {% endblock %}

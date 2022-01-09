@@ -100,7 +100,7 @@ def delete(id):
 def profile(username):
     db = get_db()
     user = db.execute(
-        'SELECT username, name, email, surname, location'
+        'SELECT id, username, name, email, surname, location'
         ' FROM user WHERE username = ?', (username,)
     ).fetchall()
     return render_template('blog/profile.html', user=user)
