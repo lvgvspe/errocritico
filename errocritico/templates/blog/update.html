@@ -12,6 +12,7 @@
     <label for="body">Conteúdo</label>
     <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
     <input type="submit" value="Salvar">
+	 <button type="button" onclick="window.location.href='{{ url_for ('index') }}'">Cancelar</button>
   </form>
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
