@@ -2,8 +2,13 @@
 
 {% block header %}
 
+<nav>
+  <ul>
+    <li><a href= "{{ url_for('blog.upload') }}">Enviar imagem</a>
+  </ul>
+  <img src="">
   <h1>{% block title %}{% for u in user %}Perfil de {{ u ['name'] }}{% endfor %}{% endblock %}</h1>
-  <img>
+
 {% endblock %}
 
 {% block content %}
