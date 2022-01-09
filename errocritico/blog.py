@@ -70,7 +70,7 @@ def update(id):
         error = None
 
         if not title:
-            error = 'Title is required.'
+            error = 'Título é necessário.'
 
         if error is not None:
             flash(error)
@@ -94,3 +94,13 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
+
+@bp.route('/profile/<string:username>')
+@login_required
+def profile(username):
+    db = get_db()
+    user = db.execute(
+        'SELECT username, name, email, surname, location'
+        ' FROM user WHERE username = ?', (username,)
+    ).fetchall()
+    return render_template('blog/profile.html', user=user)

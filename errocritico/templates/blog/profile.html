@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+  <h1>{% block title %}{% for u in user %}Perfil de {{ u ['name'] }}{% endfor %}{% endblock %}</h1>
+  <img>
+{% endblock %}
+
+{% block content %}
+{% for u in user %}
+    <article class="profile">
+      <header>
+        <div>
+          <h1>{{ u ['username'] }}</h1>
+          <h1>{{ u ['name'] }}</h1>
+        </div>
+      </header>
+    </article>
+{% endfor %}
+{% endblock %}
