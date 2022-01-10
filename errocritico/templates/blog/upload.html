@@ -2,14 +2,13 @@
 
 {% block header %}
 
-  <h1>{% block title %}Enviar arquivo{% endblock %}</h1>
+  <h1>{% block title %}Enviar imagem{% endblock %}</h1>
 
 {% endblock %}
 
 {% block content %}
-<h1>Upload new File</h1>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
-      <input type=submit value=Upload>
+      <input type=submit value=Enviar>
     </form>
 {% endblock %}

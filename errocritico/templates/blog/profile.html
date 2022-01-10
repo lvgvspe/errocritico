@@ -8,8 +8,7 @@
 
 {% block content %}
 {% for u in user %}
-
-<img src="/static/avatars/{{ u ['username'] }}" alt="Foto de perfil de {{ u ['name'] }}" style="border-radius:50%;max-width:20%">
+<img class="avatar" src="/static/avatars/{{ u ['username'] }}" alt="Foto de perfil de {{ u ['name'] }}">
 <br>
 {% if g.user['id'] == u ['id'] %}
 <button type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
