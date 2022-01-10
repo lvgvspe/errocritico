@@ -41,5 +41,6 @@ def create_app(test_config=None):
 
     from . import uploader
     app.register_blueprint(uploader.bp)
+    app.add_url_rule("/uploads/<name>", endpoint="download_file", build_only=True)
 
     return app

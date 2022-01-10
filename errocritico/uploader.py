@@ -1,23 +1,17 @@
 import os
 from flask import (
-Blueprint, Flask, flash, request, redirect, url_for, render_template, send_from_directory
+Blueprint, Flask, flash, g, request, redirect, url_for, render_template, send_from_directory, abort
 )
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = './uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-
 bp = Blueprint('uploader', __name__)
-
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
 
 @bp.route('/upload', methods=['GET', 'POST'])
-def upload_file():
+def upload_avatar():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -30,11 +24,6 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploader.download_file', name=filename))
+            file.save(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', g.user['username']))
+            return redirect(url_for('blog.profile', username=g.user['username']))
     return render_template('blog/upload.html')
-
-@bp.route('/uploads/<name>')
-def download_file(name):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], name)

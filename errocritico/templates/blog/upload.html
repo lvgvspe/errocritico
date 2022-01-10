@@ -1,23 +1,15 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
-{% block title %}Upload{% endblock %}
+{% block header %}
+
+  <h1>{% block title %}Enviar arquivo{% endblock %}</h1>
+
+{% endblock %}
 
 {% block content %}
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-
-      <h1>Upload an image</h1>
-      <hr>
-
-      <form method=post enctype=multipart/form-data>
+<h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
-      </form>
-
-    </div>
-  </div>
-</div>
-
+    </form>
 {% endblock %}
