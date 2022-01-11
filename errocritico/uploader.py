@@ -23,6 +23,6 @@ def upload_avatar():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            file.save(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', g.user['username']))
+            file.save(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', str(g.user['id'])))
             return redirect(url_for('blog.profile', username=g.user['username']))
     return render_template('blog/upload.html')

@@ -5,6 +5,8 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from werkzeug.exceptions import abort
+
 from errocritico.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -111,3 +113,53 @@ def delete(id, check_user=True):
 
 
     return redirect(url_for('auth.login'))
+
+def get_user(id, check_user=True):
+    user = get_db().execute(
+        'SELECT id, username, password, email, name, surname, location'
+        ' FROM user WHERE id = ?', (id,)
+    ).fetchone()
+
+    if user is None:
+        abort(404, f"Post id {id} doesn't exist.")
+
+    if check_user and id != g.user['id']:
+        abort(403)
+
+    return user
+
+@bp.route('/profile/<int:id>/update', methods=('GET', 'POST'))
+@login_required
+def update_profile(id):
+    user = get_user(id)
+
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        name = request.form['name']
+        surname = request.form['surname']
+        location = request.form['location']
+        error = None
+
+        if not username:
+            error = 'Usuário é necessário.'
+
+        if not email:
+            error = 'E-mail é necessário.'
+
+        if not name:
+            error = 'Nome é necessário.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?'
+                ' WHERE id = ?',
+                (username, email, name, surname, location, id)
+            )
+            db.commit()
+            return redirect(url_for('blog.profile', username=username))
+
+    return render_template('auth/update.html', user=user)

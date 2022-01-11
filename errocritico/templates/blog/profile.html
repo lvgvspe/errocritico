@@ -14,7 +14,7 @@
   </div>
 </div>
 <div class="profile-img">
-    <img class="avatar" src="/static/avatars/{{ u['username'] }}" alt="Foto de perfil de {{ u['name'] }}">
+    <img class="avatar" src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
     <br>
     {% if g.user['id'] == u['id'] %}
     <button type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
@@ -29,6 +29,7 @@
   <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
     <input class="danger" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');" style="float: right">
   </form>
+    <button type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
  {% endif %}
 {% for post in posts %}
     {% if post['author_id'] == u['id'] %}

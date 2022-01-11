@@ -109,4 +109,3 @@ def profile(username):
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('blog/profile.html', user=user, posts=posts)
-
