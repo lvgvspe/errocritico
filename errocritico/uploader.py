@@ -1,8 +1,7 @@
 import os
 from flask import (
-Blueprint, Flask, flash, g, request, redirect, url_for, render_template, send_from_directory, abort
+Blueprint, flash, g, request, redirect, url_for, render_template,
 )
-from werkzeug.utils import secure_filename
 
 bp = Blueprint('uploader', __name__)
 
