@@ -30,6 +30,7 @@
     <input class="danger" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');" style="float: right">
   </form>
     <button type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
+    <button type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
  {% endif %}
 {% for post in posts %}
     {% if post['author_id'] == u['id'] %}

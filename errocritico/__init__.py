@@ -9,6 +9,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'errocritico.sqlite'),
+        MAX_CONTENT_LENGTH=5*1000*1000
     )
 
     if test_config is None:
@@ -41,6 +42,5 @@ def create_app(test_config=None):
 
     from . import uploader
     app.register_blueprint(uploader.bp)
-    app.add_url_rule("/uploads/<name>", endpoint="download_file", build_only=True)
 
     return app

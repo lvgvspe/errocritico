@@ -6,6 +6,7 @@ from werkzeug.exceptions import abort
 from errocritico.auth import login_required
 from errocritico.db import get_db
 
+
 bp = Blueprint('blog', __name__)
 
 @bp.route('/')

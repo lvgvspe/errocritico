@@ -60,9 +60,9 @@ def login():
         ).fetchone()
 
         if user is None:
-            error = 'Incorrect username.'
+            error = 'Usuário incorreto.'
         elif not check_password_hash(user['password'], password):
-            error = 'Incorrect password.'
+            error = 'Senha incorreta.'
 
         if error is None:
             session.clear()
@@ -163,3 +163,34 @@ def update_profile(id):
             return redirect(url_for('blog.profile', username=username))
 
     return render_template('auth/update.html', user=user)
+
+@bp.route('/profile/<int:id>/password', methods=('GET', 'POST'))
+@login_required
+def update_password(id):
+    user = get_user(id)
+
+    if request.method == 'POST':
+        old_password = request.form['old_password']
+        password = request.form['password']
+        password_check = request.form['password_check']
+        error = None
+
+        if not check_password_hash(user['password'], old_password):
+            error = 'Senha incorreta.'
+
+        if password != password_check:
+            error = 'Senhas não combinam.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE user SET password = ?'
+                ' WHERE id = ?',
+                (generate_password_hash(password), id)
+            )
+            db.commit()
+            return redirect(url_for('blog.profile', username=g.user['username']))
+
+    return render_template('auth/update_password.html')
