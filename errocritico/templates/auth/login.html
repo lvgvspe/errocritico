@@ -1,16 +1,32 @@
 {% extends 'base.html' %}
+{% block style %}<link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">{% endblock %}
 
 {% block header %}
-  <h1>{% block title %}Entrar{% endblock %}</h1>
+
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="username">Usuário</label>
-    <input name="username" id="username" required>
-    <label for="password">Senha</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Entrar">
-	 <button type="button" onclick="window.location.href='{{ url_for ('index') }}'">Cancelar</button>
+<main class="text-center">
+<div class="form-signin">
+    <h1 class="h3 mb-3 fw-normal">{% block title %}Entrar{% endblock %}</h1>
+    <form method="post">
+
+    <div class="form-floating">
+        <input class="form-control" type="username" name="username" id="username" placeholder="username" required>
+        <label for="username">Usuário</label>
+    </div>
+    <div class="form-floating">
+        <input class="form-control" type="password" name="password" id="password" placeholder="password" required>
+        <label for="password">Senha</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+        <input class="w-100 btn btn-lg btn-primary" type="submit" value="Entrar">
   </form>
+</div>
+</main>
 {% endblock %}
