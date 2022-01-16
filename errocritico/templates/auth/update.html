@@ -1,22 +1,42 @@
 {% extends 'base.html' %}
+{% block style %}<link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">{% endblock %}
 
-{% block header %}
-  <h1>{% block title %}Registrar{% endblock %}</h1>
-{% endblock %}
 
 {% block content %}
+<main class="text-center">
+<div class="form-signin">
+  <h1 class="h3 mb-3 fw-normal">{% block title %}Editar usuário{% endblock %}</h1>
   <form method="post">
+
+    <div class="form-floating">
+    <input class="form-control" name="username" id="username" placeholder="username" value="{{ request.form['username'] or user['username'] }}" required>
     <label for="username">Usuário</label>
-    <input name="username" id="username" value="{{ request.form['username'] or user['username'] }}" required>
-	 <label for="email">E-mail</label>
-	 <input name="email" id="email" value="{{ request.form['email'] or user['email'] }}" required>
-	 <label for="name">Nome</label>
-	 <input name="name" id="name" value="{{ request.form['name'] or user['name'] }}" required>
-	 <label for="surname">Sobrenome</label>
-	 <input name="surname" id="surname" value="{{ request.form['surname'] or user['surname'] }}">
-	 <label for="location">Cidade/UF</label>
-	 <input name="location" id="location" value="{{ request.form['location'] or user['location'] }}">
-    <input type="submit" value="Registrar">
-	 <button type="button" onclick="window.location.href='{{ url_for ('blog.profile', username=g.user['username']) }}'">Cancelar</button>
+	</div>
+
+	<div class="form-floating">
+	<input class="form-control" name="email" placeholder="email" id="email" value="{{ request.form['email'] or user['email'] }}" required>
+	<label for="email">E-mail</label>
+	</div>
+
+	<div class="form-floating">
+	<input class="form-control" name="name" id="name" placeholder="name" value="{{ request.form['name'] or user['name'] }}" required>
+	<label for="name">Nome</label>
+	</div>
+
+	<div class="form-floating">
+	<input class="form-control" name="surname" id="surname" placeholder="surname" value="{{ request.form['surname'] or user['surname'] }}">
+	<label for="surname">Sobrenome</label>
+	</div>
+
+	<div class="form-floating">
+	<input class="form-control" name="location" id="location" placeholder="location" value="{{ request.form['location'] or user['location'] }}">
+	<label for="location">Cidade/UF</label>
+    </div>
+
+    <input class="w-100 btn btn-lg btn-primary" type="submit" value="Registrar">
+	<button class="w-100 btn btn-lg btn-secondary" type="button" onclick="window.location.href='{{ url_for ('blog.profile', username=g.user['username']) }}'">Cancelar</button>
+
   </form>
+</div>
+</main>
 {% endblock %}

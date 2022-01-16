@@ -1,45 +1,45 @@
 {% extends 'base.html' %}
-
 {% block style %}<link href="{{ url_for ('static', filename='carousel.css') }}" rel="stylesheet">{% endblock %}
+
 {% block content %}
-<div class="container">
-<div class="profile">
+{% for u in user %}
+<div class="container profile">
+<div class="row">
+  <div class="col-lg-3">
+    <img class="rounded-circle" src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
+    <br>
+    {% if g.user['id'] == u['id'] %}
+    <button class="btn btn-secondary btn-avatar" type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
+    {% endif %}
+  </div><!-- col -->
+<div class="col-lg-3 profile-info">
   <h1>{% block title %}{% for u in user %}Perfil de {{ u['name'] }}{% endfor %}{% endblock %}</h1>
   <br>
-  <div class="profile-info">
-{% for u in user %}
   <p>
       Nome: {{ u['name'] }} {{ u['surname'] }} <br>
       E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br>
       Localização: {{ u['location'] }} <br>
   </p>
-  </div>
-</div>
-<div class="profile-img">
-    <img class="rounded-circle" width=256 height=256 src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
-    <br>
     {% if g.user['id'] == u['id'] %}
-    <button type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
+  <div class="buttons">
+    <button class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
+    <button class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
+  </div>
     {% endif %}
-</div>
-{% endfor %}
+  </div><!-- col -->
 
-{% for u in user %}
 {% if g.user['id'] == u['id'] %}
-    <button type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
-    <button type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
   <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
-    <input class="danger" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');" style="float: right">
+    <input class="btn btn-primary" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');" style="float: right">
   </form>
  {% endif %}
-</div>
-<br>
-<br>
-<br>
+</div><!-- row -->
+</div><!-- container -->
 <br>
 <br>
  <div class="container marketing">
-    <div class="row">
+             <h1>Posts</h1>
+    <div class="row" data-masonry='{"percentPosition": true }'>
 {% for post in posts %}
     {% if post['author_id'] == u['id'] %}
       <div class="col-lg-4">
@@ -54,6 +54,7 @@
       </div><!-- /.col-lg-4 -->
     {% endif %}
 {% endfor %}
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
     </div>
  </div>
 {% endfor %}
