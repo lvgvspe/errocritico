@@ -7,8 +7,8 @@
 <div class="row">
   <div class="col-lg-3">
     <img class="rounded-circle" src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
-    <br>
     {% if g.user['id'] == u['id'] %}
+    <br>
     <button class="btn btn-secondary btn-avatar" type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
     {% endif %}
   </div><!-- col -->
@@ -22,17 +22,14 @@
   </p>
     {% if g.user['id'] == u['id'] %}
   <div class="buttons">
-    <button class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
-    <button class="btn btn-secondary" type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
+    <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
+    <button class="btn btn-secondary btn-profile" type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
+    <button class="btn btn-secondary btn-profile" type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
+    <button class="btn btn-primary btn-profile" type="submit" onclick="return confirm('Tem certeza disso?');">Apagar usuário</button>
+    </form>
   </div>
     {% endif %}
   </div><!-- col -->
-
-{% if g.user['id'] == u['id'] %}
-  <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
-    <input class="btn btn-primary" type="submit" value="Apagar usuário" onclick="return confirm('Tem certeza disso?');" style="float: right">
-  </form>
- {% endif %}
 </div><!-- row -->
 </div><!-- container -->
 <br>

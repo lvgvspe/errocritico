@@ -76,9 +76,15 @@ textarea {
 
 .profile {
     flex-direction: row;
+    background-color: #fff;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 90%;
 }
 
 .profile-info {
+    display: flex;
     flex: auto;
 }
 
@@ -86,7 +92,6 @@ textarea {
     display: flex;
     flex-direction: column;
     padding-bottom: 1rem;
-
 }
 
 .col-lg-3 img {
@@ -97,7 +102,13 @@ textarea {
 }
 
 .col-lg-3 .buttons {
-    align-self: flex-end;
+    display: flex;
+    margin-left: auto;
+    margin-top: auto;
+}
+
+.btn-profile {
+    margin-bottom: 0.5rem;
 }
 
 .btn-avatar {

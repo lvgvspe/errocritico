@@ -51,6 +51,7 @@
             <li><a class="dropdown-item" href="{{ url_for('index') }}">Início</a></li>
             <li><a class="dropdown-item" href="/profile/{{ g.user['username'] }}">Perfil</a></li>
             <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Novo post...</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('blog.settings') }}">Configurações</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a></li>
           </ul>
