@@ -125,7 +125,7 @@
 
             <div class="col-12">
               <label for="aboutme" class="form-label">Sobre mim</label>
-              <input type="text" class="form-control" id="aboutme" name="aboutme" placeholder="">
+              <input type="text" class="form-control" id="aboutme" name="aboutme" value="{{ request.form['aboutme'] or user['aboutme'] }}" placeholder="">
             </div>
 
             <div class="col-12">

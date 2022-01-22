@@ -116,7 +116,7 @@ def delete(id, check_user=True):
 
 def get_user(id, check_user=True):
     user = get_db().execute(
-        'SELECT id, username, password, email, name, surname, location'
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM user WHERE id = ?', (id,)
     ).fetchone()
 
@@ -146,6 +146,11 @@ def settings():
             zipcode = request.form['zipcode']
             aboutme = request.form['aboutme']
             gender = request.form['gender']
+            private_profile = request.form['private_profile']
+            private_email = request.form['private_email']
+            private_zipcode = request.form['private_zipcode']
+            private_birth = request.form['private_birth']
+            private_gender = request.form['private_gender']
             error = None
 
             if not username:
@@ -162,9 +167,9 @@ def settings():
             else:
                 db = get_db()
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?'
+                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, private_profile = ?, private_email = ?, private_zipcode = ?, private_birth = ?, private_gender = ?'
                     ' WHERE id = ?',
-                    (username, email, name, surname, location, country, state, zipcode, aboutme, gender, g.user['id'])
+                    (username, email, name, surname, location, country, state, zipcode, aboutme, gender, private_profile, private_email, private_zipcode, private_birth, private_gender, g.user['id'])
                 )
                 db.commit()
                 return redirect(url_for('blog.profile', username=username))

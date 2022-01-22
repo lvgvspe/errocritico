@@ -11,7 +11,7 @@ CREATE TABLE user (
   location TEXT NULL,
   country TEXT NULL,
   state TEXT NULL,
-  zip TEXT NULL,
+  zipcode TEXT NULL,
   aboutme TEXT NULL,
   birth TIMESTAMP NULL,
   gender TEXT NULL,
