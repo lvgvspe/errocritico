@@ -23,8 +23,6 @@
     {% if g.user['id'] == u['id'] %}
   <div class="buttons">
     <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
-    <button class="btn btn-secondary btn-profile" type="button" onclick="window.location.href='{{ url_for ('auth.update_profile', id=u['id']) }}'">Editar perfil</button>
-    <button class="btn btn-secondary btn-profile" type="button" onclick="window.location.href='{{ url_for ('auth.update_password', id=u['id']) }}'">Editar senha</button>
     <button class="btn btn-primary btn-profile" type="submit" onclick="return confirm('Tem certeza disso?');">Apagar usuário</button>
     </form>
   </div>

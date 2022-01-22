@@ -128,10 +128,10 @@ def get_user(id, check_user=True):
 
     return user
 
-@bp.route('/profile/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/settings', methods=('GET', 'POST'))
 @login_required
-def update_profile(id):
-    user = get_user(id)
+def settings():
+    user = get_user(g.user['id'])
 
     if request.method == 'POST':
         username = request.form['username']
@@ -157,12 +157,12 @@ def update_profile(id):
             db.execute(
                 'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?'
                 ' WHERE id = ?',
-                (username, email, name, surname, location, id)
+                (username, email, name, surname, location, g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.profile', username=username))
 
-    return render_template('auth/update.html', user=user)
+    return render_template('blog/settings.html', user=user)
 
 @bp.route('/profile/<int:id>/password', methods=('GET', 'POST'))
 @login_required

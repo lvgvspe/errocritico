@@ -110,8 +110,3 @@ def profile(username):
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('blog/profile.html', user=user, posts=posts)
-
-@bp.route('/settings')
-@login_required
-def settings():
-    return render_template('blog/settings.html')
