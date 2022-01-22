@@ -57,7 +57,7 @@
 
             <div class="col-12">
               <label for="address" class="form-label">Cidade</label>
-              <input type="text" class="form-control" id="address" name="location" placeholder="1234 Main St" value="{{ request.form['location'] or user['location'] }}" required>
+              <input type="text" class="form-control" id="address" name="location" placeholder="" value="{{ request.form['location'] or user['location'] }}" required>
               <div class="invalid-feedback">
                 Cidade é necessário.
               </div>
@@ -130,7 +130,7 @@
 
             <div class="col-12">
               <label for="birth" class="form-label">Data de nascimento</label>
-              <input type="date" class="form-control" id="birth" name="birth" placeholder="" required>
+              <input type="date" class="form-control" id="birth" name="birth" placeholder="" value="{{ request.form['birth'] or user['birth'] }}" required>
               <input type="checkbox" class="form-check-input" id="private_birth" name="private_birth" value="true">
               <label class="form-check-label" for="private_birth">Não mostrar idade</label>
               <div class="invalid-feedback">

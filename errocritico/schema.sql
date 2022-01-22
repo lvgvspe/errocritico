@@ -17,7 +17,7 @@ CREATE TABLE user (
   gender TEXT NULL,
   private_profile TEXT NULL,
   private_email TEXT NULL,
-  private_zip TEXT NULL,
+  private_zipcode TEXT NULL,
   private_birth TEXT NULL,
   private_gender TEXT NULL
 );
