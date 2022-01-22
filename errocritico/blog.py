@@ -5,6 +5,7 @@ from werkzeug.exceptions import abort
 
 from errocritico.auth import login_required
 from errocritico.db import get_db
+from datetime import date
 
 
 bp = Blueprint('blog', __name__)
@@ -101,7 +102,7 @@ def delete(id):
 def profile(username):
     db = get_db()
     user = db.execute(
-        'SELECT id, username, name, email, surname, location'
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM user WHERE username = ?', (username,)
     ).fetchall()
     posts = db.execute(
@@ -109,4 +110,6 @@ def profile(username):
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
-    return render_template('blog/profile.html', user=user, posts=posts)
+    for u in user:
+        age = date.today().year - int(u['birth'].split('-')[0]) - ((date.today().month, date.today().day) < (int(u['birth'].split('-')[1]), int(u['birth'].split('-')[2])))
+    return render_template('blog/profile.html', user=user, posts=posts, age=age)

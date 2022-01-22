@@ -13,7 +13,7 @@ CREATE TABLE user (
   state TEXT NULL,
   zipcode TEXT NULL,
   aboutme TEXT NULL,
-  birth TIMESTAMP NULL,
+  birth TEXT NULL,
   gender TEXT NULL,
   private_profile TEXT NULL,
   private_email TEXT NULL,

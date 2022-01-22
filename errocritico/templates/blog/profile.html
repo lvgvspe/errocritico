@@ -17,8 +17,13 @@
   <br>
   <p>
       Nome: {{ u['name'] }} {{ u['surname'] }} <br>
-      E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br>
-      Localização: {{ u['location'] }} <br>
+      {% if not u['private_email'] %}E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br> {% endif %}
+      Localização: {{ u['location'] }}, {{ u['state'] }}, {{ u['country'] }} <br>
+      {% if not u['private_birth'] %}Idade: {{ age }} <br>{% endif %}
+      {% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}
+      <br>
+      Sobre mim: {{ u['aboutme'] }} <br>
+
   </p>
   </div><!-- col -->
 </div><!-- row -->

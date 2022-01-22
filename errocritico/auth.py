@@ -20,6 +20,7 @@ def register():
         name = request.form['name']
         surname = request.form['surname']
         location = request.form['location']
+        birth = request.form['birth']
         db = get_db()
         error = None
 
@@ -31,12 +32,14 @@ def register():
             error = 'E-mail é necessário.'
         elif not name:
             error = 'Nome é necessário.'
+        elif not birth:
+            error = 'Idade é necessária.'
 
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password, email, name, surname, location) VALUES (?, ?, ?, ?, ?, ?)",
-                    (username, generate_password_hash(password), email, name, surname, location)
+                    "INSERT INTO user (username, password, email, name, surname, location, birth) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (username, generate_password_hash(password), email, name, surname, location, birth)
                 )
                 db.commit()
             except db.IntegrityError:
@@ -147,6 +150,11 @@ def settings():
             aboutme = request.form['aboutme']
             birth = request.form['birth']
             gender = request.form['gender']
+            private_profile = request.form.get('private_profile')
+            private_email = request.form.get('private_email')
+            private_zipcode = request.form.get('private_zipcode')
+            private_birth = request.form.get('private_birth')
+            private_gender = request.form.get('private_gender')
             error = None
 
             if not username:
@@ -163,9 +171,9 @@ def settings():
             else:
                 db = get_db()
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, birth = ?'
+                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, birth = ?, private_profile = ?, private_email = ?, private_zipcode = ?, private_birth = ?, private_gender = ?'
                     ' WHERE id = ?',
-                    (username, email, name, surname, location, country, state, zipcode, aboutme, gender, birth, g.user['id'])
+                    (username, email, name, surname, location, country, state, zipcode, aboutme, gender, birth, private_profile, private_email, private_zipcode, private_birth, private_gender, g.user['id'])
                 )
                 db.commit()
                 return redirect(url_for('blog.profile', username=username))
