@@ -8,7 +8,18 @@ CREATE TABLE user (
   email TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   surname TEXT NULL,
-  location TEXT NULL
+  location TEXT NULL,
+  country TEXT NULL,
+  state TEXT NULL,
+  zip TEXT NULL,
+  aboutme TEXT NULL,
+  birth TIMESTAMP NULL,
+  gender TEXT NULL,
+  private_profile TEXT NULL,
+  private_email TEXT NULL,
+  private_zip TEXT NULL,
+  private_birth TEXT NULL,
+  private_gender TEXT NULL
 );
 
 CREATE TABLE post (

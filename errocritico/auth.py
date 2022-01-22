@@ -134,63 +134,69 @@ def settings():
     user = get_user(g.user['id'])
 
     if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        name = request.form['name']
-        surname = request.form['surname']
-        location = request.form['location']
-        error = None
+        form_name = request.form['form-name']
+        if form_name == 'update_profile':
+            username = request.form['username']
+            email = request.form['email']
+            name = request.form['name']
+            surname = request.form['surname']
+            location = request.form['location']
+            country = request.form['country']
+            state = request.form['state']
+            zip = request.form['zip']
+            aboutme = request.form['aboutme']
+            gender = request.form['gender']
+            private_profile = request.form['private_profile']
+            private_email = request.form['private_email']
+            private_zip = request.form['private_zip']
+            private_birth = request.form['private_birth']
+            private_gender = request.form['private_gender']
+            error = None
 
-        if not username:
-            error = 'Usuário é necessário.'
+            if not username:
+                error = 'Usuário é necessário.'
 
-        if not email:
-            error = 'E-mail é necessário.'
+            if not email:
+                error = 'E-mail é necessário.'
 
-        if not name:
-            error = 'Nome é necessário.'
+            if not name:
+                error = 'Nome é necessário.'
 
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?'
-                ' WHERE id = ?',
-                (username, email, name, surname, location, g.user['id'])
-            )
-            db.commit()
-            return redirect(url_for('blog.profile', username=username))
+            if error is not None:
+                flash(error)
+            else:
+                db = get_db()
+                db.execute(
+                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zip = ?, aboutme = ?, gender = ?, private_profile = ?, private_email = ?, private_zip = ?, private_birth = ?, private_gender = ?'
+                    ' WHERE id = ?',
+                    (username, email, name, surname, location, country, state, zip, aboutme, gender, private_profile, private_email, private_zip, private_birth, private_gender, g.user['id'])
+                )
+                db.commit()
+                return redirect(url_for('blog.profile', username=username))
+
+        if form_name == 'update_password':
+            old_password = request.form['old_password']
+            password = request.form['password']
+            password_check = request.form['password_check']
+            error = None
+
+            if not check_password_hash(user['password'], old_password):
+                error = 'Senha incorreta.'
+
+            if password != password_check:
+                error = 'Senhas não combinam.'
+
+            if error is not None:
+                flash(error)
+            else:
+                db = get_db()
+                db.execute(
+                    'UPDATE user SET password = ?'
+                    ' WHERE id = ?',
+                    (generate_password_hash(password), g.user['id'])
+                )
+                db.commit()
+                return redirect(url_for('blog.profile', username=g.user['username']))
+
 
     return render_template('blog/settings.html', user=user)
-
-@bp.route('/profile/<int:id>/password', methods=('GET', 'POST'))
-@login_required
-def update_password(id):
-    user = get_user(id)
-
-    if request.method == 'POST':
-        old_password = request.form['old_password']
-        password = request.form['password']
-        password_check = request.form['password_check']
-        error = None
-
-        if not check_password_hash(user['password'], old_password):
-            error = 'Senha incorreta.'
-
-        if password != password_check:
-            error = 'Senhas não combinam.'
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                'UPDATE user SET password = ?'
-                ' WHERE id = ?',
-                (generate_password_hash(password), id)
-            )
-            db.commit()
-            return redirect(url_for('blog.profile', username=g.user['username']))
-
-    return render_template('auth/update_password.html')

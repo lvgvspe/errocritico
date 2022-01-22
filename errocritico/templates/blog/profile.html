@@ -20,13 +20,6 @@
       E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br>
       Localização: {{ u['location'] }} <br>
   </p>
-    {% if g.user['id'] == u['id'] %}
-  <div class="buttons">
-    <form action="{{ url_for('auth.delete', id=u['id']) }}" method="post">
-    <button class="btn btn-primary btn-profile" type="submit" onclick="return confirm('Tem certeza disso?');">Apagar usuário</button>
-    </form>
-  </div>
-    {% endif %}
   </div><!-- col -->
 </div><!-- row -->
 </div><!-- container -->
