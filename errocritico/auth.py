@@ -143,14 +143,9 @@ def settings():
             location = request.form['location']
             country = request.form['country']
             state = request.form['state']
-            zip = request.form['zip']
+            zipcode = request.form['zipcode']
             aboutme = request.form['aboutme']
             gender = request.form['gender']
-            private_profile = request.form['private_profile']
-            private_email = request.form['private_email']
-            private_zip = request.form['private_zip']
-            private_birth = request.form['private_birth']
-            private_gender = request.form['private_gender']
             error = None
 
             if not username:
@@ -167,9 +162,9 @@ def settings():
             else:
                 db = get_db()
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zip = ?, aboutme = ?, gender = ?, private_profile = ?, private_email = ?, private_zip = ?, private_birth = ?, private_gender = ?'
+                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?'
                     ' WHERE id = ?',
-                    (username, email, name, surname, location, country, state, zip, aboutme, gender, private_profile, private_email, private_zip, private_birth, private_gender, g.user['id'])
+                    (username, email, name, surname, location, country, state, zipcode, aboutme, gender, g.user['id'])
                 )
                 db.commit()
                 return redirect(url_for('blog.profile', username=username))

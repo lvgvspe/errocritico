@@ -8,7 +8,7 @@
     </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Perfil</h4>
-        <form class="needs-validation" method="post" novalidate>
+        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="form-name" value="update_profile">
           <div class="row g-3">
             <div class="col-12">
@@ -48,7 +48,7 @@
             <div class="col-12">
               <label for="email" class="form-label">E-mail</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="{{ request.form['email'] or user['email'] }}">
-              <input type="checkbox" class="form-check-input" id="private_email" value="true">
+              <input type="checkbox" class="form-check-input" id="private_email" name="private_email" value="true">
               <label class="form-check-label" for="private_email">Não mostrar E-mail</label>
               <div class="invalid-feedback">
                 E-mail é necessário.
@@ -114,10 +114,10 @@
             </div>
 
             <div class="col-md-3">
-              <label for="zip" class="form-label">CEP</label>
-              <input type="text" class="form-control" id="zip" name="zip" placeholder="" value="{{ request.form['zip'] or user['zip'] }}" required>
-              <input type="checkbox" class="form-check-input" id="private_zip" name="private_zip" value="true">
-              <label class="form-check-label" for="private_zip">Não mostrar CEP</label>
+              <label for="zipcode" class="form-label">CEP</label>
+              <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="" value="{{ request.form['zipcode'] or user['zipcode'] }}" required>
+              <input type="checkbox" class="form-check-input" id="private_zipcode" name="private_zipcode" value="true">
+              <label class="form-check-label" for="private_zipcode">Não mostrar CEP</label>
               <div class="invalid-feedback">
                 Zip code required.
               </div>
@@ -130,7 +130,7 @@
 
             <div class="col-12">
               <label for="birth" class="form-label">Data de nascimento</label>
-              <input type="date" class="form-control" id="birth" placeholder="" required>
+              <input type="date" class="form-control" id="birth" name="birth" placeholder="" required>
               <input type="checkbox" class="form-check-input" id="private_birth" name="private_birth" value="true">
               <label class="form-check-label" for="private_birth">Não mostrar idade</label>
               <div class="invalid-feedback">
