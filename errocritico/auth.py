@@ -1,4 +1,5 @@
 import functools
+import os
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -8,6 +9,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import abort
 
 from errocritico.db import get_db
+
+import errocritico as app
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -113,6 +116,7 @@ def delete(id, check_user=True):
         db = get_db()
         db.execute('DELETE FROM user WHERE id = ?', (id,))
         db.commit()
+        os.remove(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', str(g.user['id'])))
 
 
     return redirect(url_for('auth.login'))

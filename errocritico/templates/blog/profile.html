@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block style %}<link href="{{ url_for ('static', filename='carousel.css') }}" rel="stylesheet">{% endblock %}
+{% block head %}<link href="{{ url_for ('static', filename='carousel.css') }}" rel="stylesheet">{% endblock %}
 
 {% block content %}
 {% for u in user %}

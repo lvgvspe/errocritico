@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
 
-{% block header %}
-
-  <h1>{% block title %}Enviar imagem{% endblock %}</h1>
-
-{% endblock %}
-
 {% block content %}
+  <h1>{% block title %}Enviar imagem{% endblock %}</h1>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Enviar>
