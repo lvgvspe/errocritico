@@ -2,41 +2,17 @@
 {% block head %}
     <title>{% block title %}Mapa{% endblock %}</title>
     <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
-    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
 
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 {% endblock %}
 {% block content %}
-    <p>{{location}}</p>
     <div id="map" class="map"></div>
     <div id="info" style="display: none;"></div>
-    <label for="track">
-      track position
-      <input id="track" type="checkbox"/>
-    </label>
-    <p>
-	positionshowingtouser: <code id="positionshowingtouser1"></code>&nbsp;&nbsp;
-      position accuracy : <code id="accuracy"></code>&nbsp;&nbsp;
-      altitude : <code id="altitude"></code>&nbsp;&nbsp;
-      altitude accuracy : <code id="altitudeAccuracy"></code>&nbsp;&nbsp;
-      heading : <code id="heading"></code>&nbsp;&nbsp;
-      speed : <code id="speed"></code>
-    </p>
-
     <p id="demo"></p>
     <script>
-      /*import Feature from 'ol/Feature.js';
-      import Geolocation from 'ol/Geolocation.js';
-      import Map from 'ol/Map.js';
-      import View from 'ol/View.js';
-      import Point from 'ol/geom/Point.js';
-      import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer.js';
-      import {OSM, Vector as VectorSource} from 'ol/source.js';
-      import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';*/
-
       var view = new ol.View({
-        center: ol.proj.fromLonLat([{{location.longitude}},{{location.latitude}}]),
-          zoom: 14
+        center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
+          zoom: 11
       });
 
       var map = new ol.Map({
@@ -57,23 +33,7 @@
         projection: view.getProjection()
       });
 
-      function el(id) {
-        return document.getElementById(id);
-      }
-
-      el('track').addEventListener('change', function() {
-        geolocation.setTracking(this.checked);
-      });
-
-      // update the HTML page when the position changes.
-      geolocation.on('change', function() {
-	    el('positionshowingtouser1').innerText = geolocation.getPosition();
-        el('accuracy').innerText = geolocation.getAccuracy() + ' [m]';
-        el('altitude').innerText = geolocation.getAltitude() + ' [m]';
-        el('altitudeAccuracy').innerText = geolocation.getAltitudeAccuracy() + ' [m]';
-        el('heading').innerText = geolocation.getHeading() + ' [rad]';
-        el('speed').innerText = geolocation.getSpeed() + ' [m/s]';
-      });
+        geolocation.setTracking(this);
 
       // handle geolocation error.
       geolocation.on('error', function(error) {
@@ -113,7 +73,16 @@
           features: [accuracyFeature, positionFeature]
         })
       });
-
+      var layer = new ol.layer.Vector({
+          source: new ol.source.Vector({
+              features: [
+                  new ol.Feature({
+                      geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]))
+                  }),
+              ]
+          })
+      });
+     map.addLayer(layer);
 
     </script>
 {% endblock %}

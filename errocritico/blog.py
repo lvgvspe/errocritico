@@ -6,8 +6,8 @@ from werkzeug.exceptions import abort
 from errocritico.auth import login_required
 from errocritico.db import get_db
 from datetime import date
-import pycep_correios
 from geopy.geocoders import Nominatim
+import urllib.request,  json
 
 
 bp = Blueprint('blog', __name__)
@@ -116,12 +116,38 @@ def profile(username):
         age = date.today().year - int(u['birth'].split('-')[0]) - ((date.today().month, date.today().day) < (int(u['birth'].split('-')[1]), int(u['birth'].split('-')[2])))
     return render_template('blog/profile.html', user=user, posts=posts, age=age)
 
+
 @bp.route('/map')
 @login_required
 def map():
-    endereco = pycep_correios.get_address_from_cep(g.user['zipcode'])
+    with urllib.request.urlopen("https://viacep.com.br/ws/{}/json".format(g.user['zipcode'])) as url:
+        endereco = json.loads(url.read().decode())
+        geolocator = Nominatim(user_agent="test_app")
+        location = geolocator.geocode(endereco['logradouro'].split('-')[0] + ", " + endereco['bairro'] + ", " + endereco['localidade'])
 
-    geolocator = Nominatim(user_agent="test_app")
-    location = geolocator.geocode(endereco['logradouro'].split('-')[0] + ", " + endereco['bairro'] + ", " + endereco['cidade'])
+    return render_template('blog/map.html', endereco=endereco, location=location)
 
-    return render_template('blog/map.html', location=location)
+
+@bp.route('/map2')
+@login_required
+def map2():
+    db = get_db()
+    users = db.execute(
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
+        ' FROM user'
+    ).fetchall()
+
+    local = []
+    IDs = []
+
+    for u in users:
+        with urllib.request.urlopen(f"https://viacep.com.br/ws/{u['zipcode']}/json") as url:
+            address = json.loads(url.read().decode())
+            geolocator = Nominatim(user_agent="test_app")
+            location = geolocator.geocode(address['logradouro'].split('-')[0] + ", " + address['bairro'] + ", " + address['localidade'])
+            local.append({'local': location, 'username': u['username']})
+            IDs.append(u['id'])
+
+    aurelio = dict(zip(IDs, local))
+
+    return render_template('blog/map3.html', aurelio=aurelio, location=location)
