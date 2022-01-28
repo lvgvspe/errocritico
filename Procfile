@@ -1,1 +1,1 @@
-web: gunicorn errocritico:create_app
+web: gunicorn "errocritico:create_app()"
