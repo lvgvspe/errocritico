@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>OpenLayers Marker Popups</title>
+    <title>Mapa - Erro Crítico</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ url_for ('static', filename='bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='headers.css') }}" rel="stylesheet">
@@ -89,7 +89,7 @@
     //{% for x in aurelio.values() %}
     var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( {{x['local'].longitude}}, {{x['local'].latitude}} ).transform(epsg4326, projectTo),
-            {description:'Usuário: {{ x['username'] }}'} ,
+            {description:'<a href="/profile/{{x['username']}}">Usuário: {{ x['username'] }}</a>'} ,
             {externalGraphic: 'https://www.irmasclarissas.org.br/wp-content/uploads/2015/08/Map-Marker-PNG-File.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
