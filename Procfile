@@ -1,0 +1,1 @@
+web: gunicorn errocritico:create_app()
