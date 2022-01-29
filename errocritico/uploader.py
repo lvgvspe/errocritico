@@ -25,7 +25,7 @@ def upload_avatar():
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                file.save(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', str(g.user['id'])))
+                file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
                 return redirect(url_for('blog.profile', username=g.user['username']))
     except RequestEntityTooLarge:
         flash('Arquivo deve ter 5mb ou menos')
