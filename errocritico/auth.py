@@ -116,7 +116,7 @@ def delete(id, check_user=True):
         db = get_db()
         db.execute('DELETE FROM user WHERE id = ?', (id,))
         db.commit()
-        os.remove(os.path.join('/home/lvgvspe/errocritico/errocritico/static/avatars', str(g.user['id'])))
+        os.remove(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
 
 
     return redirect(url_for('auth.login'))
