@@ -23,7 +23,7 @@
       {% if not u['private_birth'] %}Idade: {{ age }} <br>{% endif %}
       {% if u['gender'] != None and u['gender'] != "None" %}{% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}{% endif %}
       <br>
-      {% if u['aboutme'] != None and u['aboutme'] != "" %}Sobre mim: {{ u['aboutme'] }} <br>{% endif %}
+      {% if u['aboutme'] != None and u['aboutme'] != "None" and u['aboutme'] != "" %}Sobre mim: {{ u['aboutme'] }} <br>{% endif %}
 
   </p>
   </div><!-- col -->
