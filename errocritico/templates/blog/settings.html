@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h1>{% block title %}Configurações{% endblock %}</h1>
+    </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Perfil</h4>
+        <form class="needs-validation" method="post" enctype="multipart/form-data" novalidate>
+        <input type="hidden" name="form-name" value="update_profile">
+          <div class="row g-3">
+            <div class="col-12">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="private_profile" name="private_profile" value="true" {% if user['private_profile'] %} {{"checked"}} {% endif %}>
+              <label class="form-check-label" for="private_profile">Não mostrar meu perfil para outros usuários</label>
+            </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="firstName" name="name" placeholder="" value="{{ request.form['name'] or user['name'] }}" required>
+              <div class="invalid-feedback">
+                Nome é necessário.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Sobrenome</label>
+              <input type="text" class="form-control" id="lastName" placeholder="" name="surname" value="{{ request.form['surname'] or user['surname'] }}" required>
+              <div class="invalid-feedback">
+                Sobrenome é necessário.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="username" class="form-label">Usuário</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">@</span>
+                <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{ request.form['username'] or user['username'] }}" required>
+              <div class="invalid-feedback">
+                  Usuário é necessário.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="{{ request.form['email'] or user['email'] }}">
+              <input type="checkbox" class="form-check-input" id="private_email" name="private_email" value="true" {% if user['private_email'] %} {{"checked"}} {% endif %}>
+              <label class="form-check-label" for="private_email">Não mostrar E-mail</label>
+              <div class="invalid-feedback">
+                E-mail é necessário.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Cidade</label>
+              <input type="text" class="form-control" id="address" name="location" placeholder="" value="{{ request.form['location'] or user['location'] }}" required>
+              <div class="invalid-feedback">
+                Cidade é necessário.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="country" class="form-label">Country</label>
+              <select class="form-select" id="country" name="country" required>
+                <option value="{{ request.form['country'] or user['country'] }}">{{ request.form['country'] or user['country'] }}</option>
+                <option>Brasil</option>
+                <option>Outro</option>
+
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="state" class="form-label">State</label>
+              <select class="form-select" id="state" name="state" required>
+                <option value="{{ request.form['state'] or user['state'] }}">{{ request.form['state'] or user['state'] }}</option>
+                <option>Acre</option>
+                <option>Alagoas</option>
+                <option>Amapá</option>
+                <option>Amazonas</option>
+                <option>Bahia</option>
+                <option>Ceará</option>
+                <option>Distrito Federal</option>
+                <option>Espírito Santo</option>
+                <option>Goiás</option>
+                <option>Maranhão</option>
+                <option>Mato Grosso</option>
+                <option>Mato Grosso do Sul</option>
+                <option>Minas Gerais</option>
+                <option>Pará</option>
+                <option>Paraíba</option>
+                <option>Paraná</option>
+                <option>Pernambuco</option>
+                <option>Piauí</option>
+                <option>Rio de Janeiro</option>
+                <option>Rio Grande do Norte</option>
+                <option>Rio Grande do Sul</option>
+                <option>Rondônia</option>
+                <option>Roraima</option>
+                <option>Santa Catarina</option>
+                <option>São Paulo</option>
+                <option>Sergipe</option>
+                <option>Tocantins</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="zipcode" class="form-label">CEP (apenas números)</label>
+              <input type="number" class="form-control" id="zipcode" name="zipcode" placeholder="" value="{{ request.form['zipcode'] or user['zipcode'] }}" required>
+              <input type="checkbox" class="form-check-input" id="private_zipcode" name="private_zipcode" value="true" {% if user['private_zipcode'] %} {{"checked"}} {% endif %}>
+              <label class="form-check-label" for="private_zipcode">Não mostrar CEP</label>
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="aboutme" class="form-label">Sobre mim</label>
+              <input type="text" class="form-control" id="aboutme" name="aboutme" value="{{ request.form['aboutme'] or user['aboutme'] }}" placeholder="">
+            </div>
+
+            <div class="col-12">
+              <label for="birth" class="form-label">Data de nascimento</label>
+              <input type="date" class="form-control" id="birth" name="birth" placeholder="" value="{{ request.form['birth'] or user['birth'] }}" required>
+              <input type="checkbox" class="form-check-input" id="private_birth" name="private_birth" value="true" {% if user['private_birth'] %} {{"checked"}} {% endif %}>
+              <label class="form-check-label" for="private_birth">Não mostrar idade</label>
+              <div class="invalid-feedback">
+                Data de nascimento necessária.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="gender" class="form-label">Gênero</label>
+              <select class="form-select" id="gender" name="gender" required>
+              <option value="{{ request.form['gender'] or user['gender'] }}">{{ request.form['gender'] or user['gender'] }}</option>
+              <option>Masculino</option>
+              <option>Feminino</option>
+              <option>Não binário</option>
+              </select>
+              <input type="checkbox" class="form-check-input" id="private_gender" name="private_gender" value="true" {% if user['private_gender'] %} {{"checked"}} {% endif %}>
+              <label class="form-check-label" for="private_gender">Não mostrar Gênero</label>
+              <div class="invalid-feedback">
+                Gênero necessário.
+              </div>
+            </div>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Salvar perfil</button>
+          </div>
+        </form>
+
+          <hr class="my-4">
+        <form class="needs-validation" method="post" novalidate>
+        <input type="hidden" name="form-name" value="update_password">
+          <div class="row g-3">
+			<h4 class="mb-3">Alterar senha</h4>
+
+            <div class="col-12">
+              <label for="old_password" class="form-label">Senha antiga</label>
+              <input type="password" class="form-control" id="old_password" name="old_password" placeholder="" required>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="password" class="form-label">Nova senha</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="" required>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="password_check" class="form-label">Digite novamente a senha</label>
+              <input type="password" class="form-control" id="password_check" name="password_check" placeholder="" required>
+            </div>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Salvar senha</button>
+          </div>
+
+          <hr class="my-4">
+
+        </form>
+  <div class="buttons">
+    <form action="{{ url_for('auth.delete', id=g.user['id']) }}" method="post">
+    <button class="btn btn-primary btn-profile" type="submit" onclick="return confirm('Tem certeza disso?');">Apagar conta</button>
+    </form>
+  </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+{% endblock %}

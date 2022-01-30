@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block head %}<link href="{{ url_for ('static', filename='carousel.css') }}" rel="stylesheet">{% endblock %}
+
+{% block content %}
+{% for u in user %}
+<div class="container profile">
+<div class="row">
+  <div class="col-lg-3">
+    <img class="rounded-circle" src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
+    {% if g.user['id'] == u['id'] %}
+    <br>
+    <button class="btn btn-secondary btn-avatar" type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
+    {% endif %}
+  </div><!-- col -->
+<div class="col-lg-3 profile-info">
+  <h1>{% block title %}{% for u in user %}Perfil de {{ u['name'] }}{% endfor %}{% endblock %}</h1>
+  <br>
+  <p>
+      Nome: {{ u['name'] }} {{ u['surname'] }} <br>
+      {% if not u['private_email'] %}E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br>{% endif %}
+		{% if u['location'] and u['country'] and u['state'] %}
+      Localização: {{ u['location'] }}, {{ u['state'] }}, {{ u['country'] }} <br>{% endif %}
+      {% if not u['private_birth'] %}Idade: {{ age }} <br>{% endif %}
+      {% if not u['gender'] == "None" %}{% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}{% endif %}
+      <br>
+      {% if u['aboutme'] != "None" and u['aboutme'] != "" %}Sobre mim: {{ u['aboutme'] }} <br>{% endif %}
+
+  </p>
+  </div><!-- col -->
+</div><!-- row -->
+</div><!-- container -->
+<br>
+<br>
+ <div class="container marketing">
+             <h1>Posts</h1>
+    <div class="row" data-masonry='{"percentPosition": true }'>
+{% for post in posts %}
+    {% if post['author_id'] == u['id'] %}
+      <div class="col-lg-4">
+        <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="/static/avatars/{{ post['author_id'] }}" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/>
+
+        <h2>{{ post['title'] }}</h2>
+        <p>by <a href="{{ url_for('blog.profile', username=post['username']) }}">{{ post['username'] }}</a> on {{ post['created'].strftime('%Y-%m-%d') }}</p>
+        <p>{{ post['body'] }}</p>
+        {% if g.user['id'] == post['author_id'] %}
+        <p><a class="btn btn-secondary" href="{{ url_for('blog.update', id=post['id']) }}">Editar</a></p>
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+    {% endif %}
+{% endfor %}
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+    </div>
+ </div>
+{% endfor %}
+{% endblock %}
