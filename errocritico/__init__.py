@@ -45,7 +45,4 @@ def create_app(test_config=None):
     from . import uploader
     app.register_blueprint(uploader.bp)
 
-    from . import concursos
-    app.register_blueprint(concursos.bp)
-
     return app
