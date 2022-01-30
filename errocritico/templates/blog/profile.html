@@ -21,7 +21,7 @@
 		{% if u['location'] and u['country'] and u['state'] %}
       Localização: {{ u['location'] }}, {{ u['state'] }}, {{ u['country'] }} <br>{% endif %}
       {% if not u['private_birth'] %}Idade: {{ age }} <br>{% endif %}
-      {% if not u['gender'] == "None" %}{% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}{% endif %}
+      {% if u['gender'] != "None" %}{% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}{% endif %}
       <br>
       {% if u['aboutme'] != "None" and u['aboutme'] != "" %}Sobre mim: {{ u['aboutme'] }} <br>{% endif %}
 
