@@ -5,6 +5,7 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
+DATABASE_URL = os.environ['DATABASE_URL']
 
 def get_db():
     if 'db' not in g:
