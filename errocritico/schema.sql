@@ -15,6 +15,7 @@ CREATE TABLE users (
   aboutme TEXT,
   birth TEXT,
   gender TEXT,
+  avatar TEXT,
   private_profile TEXT,
   private_email TEXT,
   private_zipcode TEXT,
