@@ -12,6 +12,8 @@ from errocritico.db import get_db
 
 import errocritico as app
 
+from psycopg.rows import dict_row
+
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
