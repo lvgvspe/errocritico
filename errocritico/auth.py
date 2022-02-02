@@ -12,7 +12,7 @@ from errocritico.db import get_db
 
 import errocritico as app
 
-from psycopg.rows import dict_row
+from psycopg2.rows import dict_row
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
