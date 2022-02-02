@@ -51,7 +51,7 @@ def create():
     return render_template('blog/create.html')
 
 def get_post(id, check_author=True):
-    cur - get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur = get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
