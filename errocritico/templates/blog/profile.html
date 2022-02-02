@@ -6,7 +6,7 @@
 <div class="container profile">
 <div class="row">
   <div class="col-lg-3">
-    <img class="rounded-circle" src="/static/avatars/{{ u['id'] }}" alt="Foto de perfil de {{ u['name'] }}">
+    <img class="rounded-circle" src="{{ u['avatar'] }}" alt="Foto de perfil de {{ u['name'] }}">
     {% if g.user['id'] == u['id'] %}
     <br>
     <button class="btn btn-secondary btn-avatar" type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
