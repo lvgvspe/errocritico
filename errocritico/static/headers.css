@@ -46,7 +46,6 @@ nav {
 @media (max-width: 1200px) {
   .sticky {
       position: initial;
-      backgroung: red;
   }
 }
 
