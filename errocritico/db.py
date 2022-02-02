@@ -40,4 +40,4 @@ def init_app(app):
     app.cli.add_command(init_db_command)
     
 if __name__ == '__main__':
-    init_db_command()
+    init_db()
