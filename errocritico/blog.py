@@ -120,7 +120,7 @@ def profile(username):
 @login_required
 def map():
     db = get_db()
-    users = db.cursor()execute(
+    users = db.cursor().execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users'
     ).fetchall()
