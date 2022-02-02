@@ -63,9 +63,10 @@ def login():
         db = get_db()
         error = None
         cur = db.cursor()
-        user = cur.execute(
+        cur.execute(
             'SELECT * FROM users WHERE username = %s', (username,)
-        ).fetchone()
+        )
+        user = cur.fetchone()
 
         if user is None:
             error = 'Usuário incorreto.'
