@@ -43,7 +43,7 @@ nav {
   width: 100%;
   z-index: 2;
 }
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .sticky {
       position: initial;
   }
@@ -53,7 +53,7 @@ nav {
 .sticky + .content {
   padding-top: 7rem;
 }
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .sticky + .content {
       padding-top: 0;
   }
