@@ -3,8 +3,11 @@ from flask import (
 Blueprint, flash, g, request, redirect, url_for, render_template,
 )
 from werkzeug.exceptions import RequestEntityTooLarge
+import cloudinary
 
 bp = Blueprint('uploader', __name__)
+
+cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), api_secret=os.getenv('API_SECRET'))
 
 def allowed_file(filename):
     return '.' in filename and \
