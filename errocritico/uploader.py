@@ -4,6 +4,7 @@ Blueprint, flash, g, request, redirect, url_for, render_template,
 )
 from werkzeug.exceptions import RequestEntityTooLarge
 from errocritico.db import get_db
+import psycopg2.extras
 import cloudinary
 import cloudinary.uploader
 
