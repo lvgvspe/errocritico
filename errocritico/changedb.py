@@ -7,6 +7,6 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 cur = conn.cursor()
 
-cur.execute = "DROP TABLE IF EXISTS test;"
+cur.execute("DROP TABLE IF EXISTS test;")
 
 conn.commit()
