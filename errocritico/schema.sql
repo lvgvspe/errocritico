@@ -7,19 +7,19 @@ CREATE TABLE users (
   password TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
-  surname TEXT NULL,
-  location TEXT NULL,
-  country TEXT NULL,
-  state TEXT NULL,
-  zipcode TEXT NULL,
-  aboutme TEXT NULL,
-  birth TEXT NULL,
-  gender TEXT NULL,
-  private_profile TEXT NULL,
-  private_email TEXT NULL,
-  private_zipcode TEXT NULL,
-  private_birth TEXT NULL,
-  private_gender TEXT NULL
+  surname TEXT,
+  location TEXT,
+  country TEXT,
+  state TEXT,
+  zipcode TEXT,
+  aboutme TEXT,
+  birth TEXT,
+  gender TEXT,
+  private_profile TEXT,
+  private_email TEXT,
+  private_zipcode TEXT,
+  private_birth TEXT,
+  private_gender TEXT
 );
 
 CREATE TABLE posts (
