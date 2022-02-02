@@ -32,15 +32,15 @@ def upload_avatar():
             if file and allowed_file(file.filename):
                 upload_result = cloudinary.uploader.upload(file, public_id = g.user['username'])
                 #file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
-#                 db = get_db()
-#                 cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#                 cur.execute(
-#                     'UPDATE users SET avatar = %s'
-#                     ' WHERE id = %s',
-#                     (upload_result['url'], id)
-#                 )
-#                 db.commit()
-                return upload_result
+                db = get_db()
+                cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+                cur.execute(
+                    'UPDATE users SET avatar = %s'
+                    ' WHERE id = %s',
+                    (upload_result['secure_url'], g.user['id'])
+                )
+                db.commit()
+                return redirect(url_for('blog.profile')
     except RequestEntityTooLarge:
         flash('Arquivo deve ter 5mb ou menos')
     return render_template('blog/upload.html')
