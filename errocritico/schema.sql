@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
 
 CREATE TABLE user (
-  id INTEGER PRIMARY KEY SERIAL,
+  id INTEGER PRIMARY KEY serial,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
@@ -23,9 +23,9 @@ CREATE TABLE user (
 );
 
 CREATE TABLE post (
-  id INTEGER PRIMARY KEY SERIAL,
+  id INTEGER PRIMARY KEY serial,
   author_id INTEGER NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created date not null default current_timestamp,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
