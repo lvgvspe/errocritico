@@ -7,3 +7,4 @@ db = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = db.cursor()
 with open('schema.sql') as f:
     cursor.execute(f.read())
+db.commit()
