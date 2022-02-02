@@ -19,7 +19,8 @@
       Nome: {{ u['name'] }} {{ u['surname'] }} <br>
       {% if not u['private_email'] %}E-mail: <a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a> <br>{% endif %}
 		{% if u['location'] and u['country'] and u['state'] %}
-      Localização: {{ u['location'] }}, {{ u['state'] }}, {{ u['country'] }} <br>{% endif %}
+	  	{% if u['country'] != 'None' and u['state'] != 'None' %}
+      Localização: {{ u['location'] }}, {{ u['state'] }}, {{ u['country'] }} <br>{% endif %}{% endif %}
       {% if not u['private_birth'] %}Idade: {{ age }} <br>{% endif %}
       {% if u['gender'] != None and u['gender'] != "None" %}{% if not u['private_gender'] %}Gênero: {{ u['gender'] }} <br>{% endif %}{% endif %}
       <br>
