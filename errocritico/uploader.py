@@ -4,6 +4,7 @@ Blueprint, flash, g, request, redirect, url_for, render_template,
 )
 from werkzeug.exceptions import RequestEntityTooLarge
 import cloudinary
+import cloudinary.uploader
 
 bp = Blueprint('uploader', __name__)
 
