@@ -12,7 +12,7 @@ from errocritico.db import get_db
 
 import errocritico as app
 
-from psycopg2.rows import dict_row
+import psycopg2
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -64,7 +64,7 @@ def login():
         password = request.form['password']
         db = get_db()
         error = None
-        cur = db.cursor(row_factory=dict_row)
+        cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute(
             'SELECT * FROM users WHERE username = %s', (username,)
         )
