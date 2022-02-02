@@ -112,7 +112,7 @@ def profile(username):
     db = get_db()
     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(
-        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, avatar, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users WHERE username = %s', (username,)
     )
     user = cur.fetchall()
