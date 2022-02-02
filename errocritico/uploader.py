@@ -30,7 +30,7 @@ def upload_avatar():
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                upload_result = cloudinary.uploader.upload(file, public_id = "g.user['username']")
+                upload_result = cloudinary.uploader.upload(file, public_id = g.user['username'])
                 #file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
 #                 db = get_db()
 #                 cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
