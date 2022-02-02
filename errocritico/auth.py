@@ -42,7 +42,7 @@ def register():
             try:
                 cur = db.cursor()
                 cur.execute(
-                    "INSERT INTO users (username, password, email, name, surname, location, birth) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, password, email, name, surname, location, birth) VALUES (%s)",
                     (username, generate_password_hash(password), email, name, surname, location, birth)
                 )
                 db.commit()
