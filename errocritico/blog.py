@@ -118,7 +118,7 @@ def profile(username):
     user = cur.fetchall()
     cur2 = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur2.execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, body, created, author_id, username, avatar'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     )
