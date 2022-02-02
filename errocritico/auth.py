@@ -41,7 +41,7 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password, email, name, surname, location, birth) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO users (username, password, email, name, surname, location, birth) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     (username, generate_password_hash(password), email, name, surname, location, birth)
                 )
                 db.commit()
@@ -62,7 +62,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user WHERE username = ?', (username,)
+            'SELECT * FROM users WHERE username = ?', (username,)
         ).fetchone()
 
         if user is None:
@@ -87,7 +87,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT * FROM users WHERE id = ?', (user_id,)
         ).fetchone()
 
 @bp.route('/logout')
@@ -114,7 +114,7 @@ def delete(id, check_user=True):
 
     else:
         db = get_db()
-        db.execute('DELETE FROM user WHERE id = ?', (id,))
+        db.execute('DELETE FROM users WHERE id = ?', (id,))
         db.commit()
         os.remove(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
 
@@ -124,7 +124,7 @@ def delete(id, check_user=True):
 def get_user(id, check_user=True):
     user = get_db().execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM user WHERE id = ?', (id,)
+        ' FROM users WHERE id = ?', (id,)
     ).fetchone()
 
     if user is None:
@@ -175,7 +175,7 @@ def settings():
             else:
                 db = get_db()
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, birth = ?, private_profile = ?, private_email = ?, private_zipcode = ?, private_birth = ?, private_gender = ?'
+                    'UPDATE users SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, birth = ?, private_profile = ?, private_email = ?, private_zipcode = ?, private_birth = ?, private_gender = ?'
                     ' WHERE id = ?',
                     (username, email, name, surname, location, country, state, zipcode, aboutme, gender, birth, private_profile, private_email, private_zipcode, private_birth, private_gender, g.user['id'])
                 )
@@ -199,7 +199,7 @@ def settings():
             else:
                 db = get_db()
                 db.execute(
-                    'UPDATE user SET password = ?'
+                    'UPDATE users SET password = ?'
                     ' WHERE id = ?',
                     (generate_password_hash(password), g.user['id'])
                 )
