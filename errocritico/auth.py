@@ -91,7 +91,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        cur = get_db().cursor()
+        cur = get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute(
             'SELECT * FROM users WHERE id = %s', (user_id,)
         )
