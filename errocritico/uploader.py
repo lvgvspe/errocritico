@@ -3,6 +3,7 @@ from flask import (
 Blueprint, flash, g, request, redirect, url_for, render_template,
 )
 from werkzeug.exceptions import RequestEntityTooLarge
+from errocritico.db import get_db
 import cloudinary
 import cloudinary.uploader
 
@@ -31,6 +32,14 @@ def upload_avatar():
             if file and allowed_file(file.filename):
                 upload_result = cloudinary.uploader.upload(file, public_id = "g.user['username']")
                 #file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
+#                 db = get_db()
+#                 cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#                 cur.execute(
+#                     'UPDATE users SET avatar = %s'
+#                     ' WHERE id = %s',
+#                     (upload_result['url'], id)
+#                 )
+#                 db.commit()
                 return upload_result
     except RequestEntityTooLarge:
         flash('Arquivo deve ter 5mb ou menos')
