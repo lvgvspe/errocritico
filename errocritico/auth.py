@@ -62,7 +62,7 @@ def login():
         password = request.form['password']
         db = get_db()
         error = None
-        cur = db.cursor()
+        cur = db.cursor(row_factory=dict_row)
         cur.execute(
             'SELECT * FROM users WHERE username = %s', (username,)
         )
