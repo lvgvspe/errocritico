@@ -25,8 +25,9 @@ def upload_avatar():
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
-                return redirect(url_for('blog.profile', username=g.user['username']))
+                upload_result = cloudinary.uploader.upload(file)
+                #file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
+                return upload_result
     except RequestEntityTooLarge:
         flash('Arquivo deve ter 5mb ou menos')
     return render_template('blog/upload.html')
