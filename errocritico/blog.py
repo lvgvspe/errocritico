@@ -15,7 +15,7 @@ bp = Blueprint('blog', __name__)
 @bp.route('/')
 def index():
     db = get_db()
-    posts = db.execute(
+    posts = db.cursor().execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
         ' ORDER BY created DESC'
@@ -37,7 +37,7 @@ def create():
             flash(error)
         else:
             db = get_db()
-            db.execute(
+            db.cursor().execute(
                 'INSERT INTO posts (title, body, author_id)'
                 ' VALUES (?, ?, ?)',
                 (title, body, g.user['id'])
@@ -48,7 +48,7 @@ def create():
     return render_template('blog/create.html')
 
 def get_post(id, check_author=True):
-    post = get_db().execute(
+    post = get_db().cursor().execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
         ' WHERE p.id = ?',
@@ -80,7 +80,7 @@ def update(id):
             flash(error)
         else:
             db = get_db()
-            db.execute(
+            db.cursor().execute(
                 'UPDATE posts SET title = ?, body = ?'
                 ' WHERE id = ?',
                 (title, body, id)
@@ -95,7 +95,7 @@ def update(id):
 def delete(id):
     get_post(id)
     db = get_db()
-    db.execute('DELETE FROM posts WHERE id = ?', (id,))
+    db.cursor().execute('DELETE FROM posts WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
 
@@ -103,11 +103,11 @@ def delete(id):
 @login_required
 def profile(username):
     db = get_db()
-    user = db.execute(
+    user = db.cursor().execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users WHERE username = ?', (username,)
     ).fetchall()
-    posts = db.execute(
+    posts = db.cursor().execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
         ' ORDER BY created DESC'
@@ -120,7 +120,7 @@ def profile(username):
 @login_required
 def map():
     db = get_db()
-    users = db.execute(
+    users = db.cursor()execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users'
     ).fetchall()
