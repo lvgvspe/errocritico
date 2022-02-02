@@ -43,7 +43,7 @@ nav {
   width: 100%;
   z-index: 2;
 }
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .sticky {
       position: initial;
       backgroung: red;
@@ -54,7 +54,7 @@ nav {
 .sticky + .content {
   padding-top: 7rem;
 }
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .sticky + .content {
       padding-top: 0;
   }
