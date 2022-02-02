@@ -45,6 +45,7 @@ nav {
 }
 @media (min-width: 1200px) {
   .sticky {
+      position: initial;
   }
 }
 
@@ -54,5 +55,6 @@ nav {
 }
 @media (min-width: 1200px) {
   .sticky + .content {
+      padding-top: 0;
   }
 }
