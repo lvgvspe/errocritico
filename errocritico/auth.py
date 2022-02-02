@@ -42,7 +42,7 @@ def register():
 
         if error is None:
             try:
-                cur = db.cursor()
+                cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                 cur.execute(
                     "INSERT INTO users (username, password, email, name, surname, location, birth) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                     (username, generate_password_hash(password), email, name, surname, location, birth,)
@@ -93,7 +93,7 @@ def load_logged_in_user():
     else:
         cur = get_db().cursor()
         g.user = cur.execute(
-            'SELECT * FROM users WHERE id = ?', (user_id,)
+            'SELECT * FROM users WHERE id = %s', (user_id,)
         ).fetchone()
 
 @bp.route('/logout')
@@ -120,8 +120,8 @@ def delete(id, check_user=True):
 
     else:
         db = get_db()
-        cur = db.cursor()
-        cur.execute('DELETE FROM users WHERE id = ?', (id,))
+        cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute('DELETE FROM users WHERE id = %s', (id,))
         db.commit()
         os.remove(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
 
@@ -129,10 +129,10 @@ def delete(id, check_user=True):
     return redirect(url_for('auth.login'))
 
 def get_user(id, check_user=True):
-    cur = get_db().cursor()
+    cur = get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
     user = cur.execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM users WHERE id = ?', (id,)
+        ' FROM users WHERE id = &s', (id,)
     ).fetchone()
 
     if user is None:
@@ -182,10 +182,10 @@ def settings():
                 flash(error)
             else:
                 db = get_db()
-                cur = db.cursor()
+                cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                 cur.execute(
-                    'UPDATE users SET username = ?, email = ?, name = ?, surname = ?, location = ?, country = ?, state = ?, zipcode = ?, aboutme = ?, gender = ?, birth = ?, private_profile = ?, private_email = ?, private_zipcode = ?, private_birth = ?, private_gender = ?'
-                    ' WHERE id = ?',
+                    'UPDATE users SET username = %s, email = %s, name = %s, surname = %s, location = %s, country = %s, state = %s, zipcode = %s, aboutme = %s, gender = %s, birth = %s, private_profile = %s, private_email = %s, private_zipcode = %s, private_birth = %s, private_gender = %s'
+                    ' WHERE id = %s',
                     (username, email, name, surname, location, country, state, zipcode, aboutme, gender, birth, private_profile, private_email, private_zipcode, private_birth, private_gender, g.user['id'])
                 )
                 db.commit()
@@ -207,10 +207,10 @@ def settings():
                 flash(error)
             else:
                 db = get_db()
-                cur = db.cursor()
+                cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                 cur.execute(
-                    'UPDATE users SET password = ?'
-                    ' WHERE id = ?',
+                    'UPDATE users SET password = %s'
+                    ' WHERE id = %s',
                     (generate_password_hash(password), g.user['id'])
                 )
                 db.commit()
