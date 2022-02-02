@@ -1,4 +1,4 @@
-CREATE TABLE (
+CREATE TABLE test (
   id serial,
   username text
  );
