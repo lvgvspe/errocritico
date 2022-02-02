@@ -40,7 +40,7 @@ def upload_avatar():
                     (upload_result['secure_url'], g.user['id'])
                 )
                 db.commit()
-                return redirect(url_for('blog.profile')
+                return redirect(url_for('blog.profile', username=g.user['username']))
     except RequestEntityTooLarge:
         flash('Arquivo deve ter 5mb ou menos')
     return render_template('blog/upload.html')
