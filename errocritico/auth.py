@@ -92,9 +92,10 @@ def load_logged_in_user():
         g.user = None
     else:
         cur = get_db().cursor()
-        g.user = cur.execute(
+        cur.execute(
             'SELECT * FROM users WHERE id = %s', (user_id,)
-        ).fetchone()
+        )
+        g.user = cur.fetchone()
 
 @bp.route('/logout')
 def logout():
@@ -130,10 +131,11 @@ def delete(id, check_user=True):
 
 def get_user(id, check_user=True):
     cur = get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
-    user = cur.execute(
+    cur.execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users WHERE id = &s', (id,)
-    ).fetchone()
+    )
+    user = cur.fetchone()
 
     if user is None:
         abort(404, f"Post id {id} doesn't exist.")
