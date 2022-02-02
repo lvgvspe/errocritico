@@ -6,4 +6,4 @@ DATABASE_URL = os.environ['DATABASE_URL']
 db = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = db.cursor()
 with open('schema.sql') as f:
-    cursor.execute(f.read().decode('utf8'))
+    cursor.execute(f.read())
