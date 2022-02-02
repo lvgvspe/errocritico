@@ -133,7 +133,7 @@ def get_user(id, check_user=True):
     cur = get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM users WHERE id = &s', (id,)
+        ' FROM users WHERE id = %s', (id,)
     )
     user = cur.fetchone()
 
