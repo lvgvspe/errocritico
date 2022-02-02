@@ -8,14 +8,14 @@ from errocritico.db import get_db
 from datetime import date
 from geopy.geocoders import Nominatim
 import urllib.request,  json
-
+import psycopg2.extras
 
 bp = Blueprint('blog', __name__)
 
 @bp.route('/')
 def index():
     db = get_db()
-    cur=db.cursor()
+    cur=db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
@@ -39,10 +39,10 @@ def create():
             flash(error)
         else:
             db = get_db()
-            cur = db.cursor()
+            cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
             cur.execute(
                 'INSERT INTO posts (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
+                ' VALUES (%s, %s, %s)',
                 (title, body, g.user['id'])
             )
             db.commit()
@@ -51,13 +51,14 @@ def create():
     return render_template('blog/create.html')
 
 def get_post(id, check_author=True):
-    cur - get_db().cursor()
-    post = cur.execute(
+    cur - get_db().cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
+        ' WHERE p.id = %s',
         (id,)
-    ).fetchone()
+    )
+    post = cur.fetchone()
 
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
@@ -84,10 +85,10 @@ def update(id):
             flash(error)
         else:
             db = get_db()
-            cur = db.cursor()
+            cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
             cur.execute(
-                'UPDATE posts SET title = ?, body = ?'
-                ' WHERE id = ?',
+                'UPDATE posts SET title = %s, body = %s'
+                ' WHERE id = %s',
                 (title, body, id)
             )
             db.commit()
@@ -100,8 +101,8 @@ def update(id):
 def delete(id):
     get_post(id)
     db = get_db()
-    cur = db.cursor()
-    cur.execute('DELETE FROM posts WHERE id = ?', (id,))
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute('DELETE FROM posts WHERE id = %s', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
 
@@ -109,16 +110,19 @@ def delete(id):
 @login_required
 def profile(username):
     db = get_db()
-    cur = db.cursor()
-    user = cur.execute(
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM users WHERE username = ?', (username,)
-    ).fetchall()
-    posts = cur.execute(
+        ' FROM users WHERE username = %s', (username,)
+    )
+    user = cur.fetchall()
+    cur2 = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur2.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM posts p JOIN users u ON p.author_id = u.id'
         ' ORDER BY created DESC'
-    ).fetchall()
+    )
+    posts = cur2.fetchall()
     for u in user:
         age = date.today().year - int(u['birth'].split('-')[0]) - ((date.today().month, date.today().day) < (int(u['birth'].split('-')[1]), int(u['birth'].split('-')[2])))
     return render_template('blog/profile.html', user=user, posts=posts, age=age)
@@ -127,11 +131,12 @@ def profile(username):
 @login_required
 def map():
     db = get_db()
-    cur = db.cursor()
-    users = cur.execute(
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(
         'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
         ' FROM users'
-    ).fetchall()
+    )
+    users = cur.fetchall()
 
     local = []
     IDs = []
