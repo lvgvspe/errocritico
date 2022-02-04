@@ -88,6 +88,17 @@
 </div>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
   <script type="text/javascript">
+    /*import 'ol/ol.css';
+    import Feature from 'ol/Feature';
+    import Map from 'ol/Map';
+    import Point from 'ol/geom/Point';
+    import TileJSON from 'ol/source/TileJSON';
+    import VectorSource from 'ol/source/Vector';
+    import View from 'ol/View';
+    import {Icon, Style} from 'ol/style';
+    import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+    import {fromLonLat} from 'ol/proj';*/
+    
     const rome = new Feature({
       geometry: new Point(fromLonLat([12.5, 41.9])),
     });
