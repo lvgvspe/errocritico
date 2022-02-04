@@ -119,7 +119,7 @@
     const vectorSource = new ol.source.Vector({
       features: [
         //{% for x in aurelio.values() %}
-        {{x['username']}}
+        {{x['username']}},
         //{% endfor %}
       ],
     });
