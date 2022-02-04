@@ -99,21 +99,33 @@
 //     import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 //     import {fromLonLat} from 'ol/proj';
     
+    const rome = new ol.Feature({
+      geometry: ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])),
+    });
+    
+    rome.setStyle(
+      new ol.style.Style({
+        image: new ol.style.Icon({
+          color: '#BADA55',
+          crossOrigin: 'anonymous',
+          // For Internet Explorer 11
+          imgSize: [20, 20],
+          src: 'data/square.svg',
+        })
+      })
+    )
+    
     var map = new ol.Map({
         target: 'map',
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }),
-//           new ol.layer.Vector({
-//             source: new ol.source.Vector({
-//               features: [
-//                 new ol.Feature({
-//                   geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])
-//                 })
-//               ],
-//             }),
-//           })
+          new ol.layer.Vector({
+            source: new ol.source.Vector({
+              features: [rome],
+            }),
+          })
         ],
         view: new ol.View({
           center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
