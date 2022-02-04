@@ -114,15 +114,15 @@
       source: vectorSource,
     });
     
-    var map = new ol.Map({
-        target: 'map',
+    const map = new Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }), vectorLayer
         ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
+        target: document.getElementById('map'),
+        view: new View({
+          center: [{{location.longitude}}, {{location.latitude}}],
           zoom: 11
         })
       });
