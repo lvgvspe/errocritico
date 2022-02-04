@@ -100,9 +100,9 @@
 //     import {fromLonLat} from 'ol/proj';
     
     const rome = new ol.Feature({
-      geometry: ol.geom.Point(ol.proj.fromLonLat([-16, -48])),
+      geometry: new ol.geom.Point(ol.proj.fromLonLat([12.5, 41.9])),
     });
-    
+
     rome.setStyle(
       new ol.style.Style({
         image: new ol.style.Icon({
@@ -115,23 +115,29 @@
       })
     );
     
-    var map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          }),
-          new ol.layer.Vector({
-            source: new ol.source.Vector({
-              features: [rome],
-            }),
-          })
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([-16, -48]),
-          zoom: 12
-        })
-      });
+    const vectorSource = new ol.source.Vector({
+      features: [rome],
+    });
+
+    const vectorLayer = new ol.layer.Vector({
+      source: vectorSource,
+    });
+
+    const rasterLayer = new ol.layer.Tile({
+      source: new ol.source.TileJSON({
+        url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json?secure=1',
+        crossOrigin: '',
+      }),
+    });
+
+    const map = new ol.Map({
+      layers: [rasterLayer, vectorLayer],
+      target: document.getElementById('map'),
+      view: new ol.View({
+        center: ol.proj.fromLonLat([2.896372, 44.6024]),
+        zoom: 3,
+      }),
+    });
   </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
