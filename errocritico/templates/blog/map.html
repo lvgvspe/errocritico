@@ -131,8 +131,8 @@
       layers: [rasterLayer, vectorLayer],
       target: document.getElementById('map'),
       view: new ol.View({
-        center: ol.proj.fromLonLat([2.896372, 44.6024]),
-        zoom: 3,
+        center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
+        zoom: 12,
       }),
     });
   </script>
