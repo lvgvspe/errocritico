@@ -102,18 +102,17 @@
     const rome = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])),
     });
+    
+    const romeStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: 'https://www.freepnglogos.com/uploads/pin-png/flat-design-map-pin-transparent-png-stickpng-18.png',
+      }),
+    });
 
-    rome.setStyle(
-      new ol.style.Style({
-        image: new ol.style.Icon({
-          color: '#BADA55',
-          crossOrigin: 'anonymous',
-          // For Internet Explorer 11
-          imgSize: [20, 20],
-          src: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Square_-_black_simple.svg',
-        }),
-      })
-    );
+    rome.setStyle(romeStyle);
     
     const vectorSource = new ol.source.Vector({
       features: [rome],
