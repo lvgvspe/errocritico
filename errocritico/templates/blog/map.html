@@ -88,7 +88,18 @@
 </div>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
   <script type="text/javascript">
-    var map = new ol.Map("map");
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
+          zoom: 4
+        })
+      });;
     map.addLayer(new ol.Layer.OSM());
 
     epsg4326 =  new ol.Projection("EPSG:4326"); //WGS 1984 projection
