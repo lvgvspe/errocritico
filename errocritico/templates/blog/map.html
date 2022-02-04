@@ -103,8 +103,8 @@
       geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])),
     });
     
-    const romeStyle = new Style({
-      image: new Icon({
+    const romeStyle = new ol.style.Style({
+      image: new ol.style.Icon({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
