@@ -69,7 +69,7 @@
       </div>
     </div>
   </nav>
-  <div id="map" class="map"></div>
+    <div id="map" class="map"><div id="popup"></div></div>
 <div class="container">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
@@ -102,6 +102,7 @@
     {% for x in aurelio.values() %}
     const {{x['username']}} = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([{{x['local'].longitude}}, {{x['local'].latitude}}])),
+      name: '{{x['username']}}',
     });
     const {{x['username']}}Style = new ol.style.Style({
       image: new ol.style.Icon({
@@ -139,6 +140,33 @@
         center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
         zoom: 12,
       }),
+    });
+    
+    const element = document.getElementById('popup');
+
+    const popup = new ol.Overlay({
+      element: element,
+      positioning: 'bottom-center',
+      stopEvent: false,
+    });
+    map.addOverlay(popup);
+
+    // display popup on click
+    map.on('click', function (evt) {
+      const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        return feature;
+      });
+      if (feature) {
+        popup.setPosition(evt.coordinate);
+        $(element).popover({
+          placement: 'top',
+          html: true,
+          content: feature.get('name'),
+        });
+        $(element).popover('show');
+      } else {
+        $(element).popover('dispose');
+      }
     });
   </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
