@@ -105,15 +105,15 @@
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }),
-          new ol.layer.Vector({
-            source: new ol.source.Vector({
-              features: [
-                new ol.Feature({
-                  geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])
-                })
-              ],
-            }),
-          })
+//           new ol.layer.Vector({
+//             source: new ol.source.Vector({
+//               features: [
+//                 new ol.Feature({
+//                   geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])
+//                 })
+//               ],
+//             }),
+//           })
         ],
         view: new ol.View({
           center: ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}]),
