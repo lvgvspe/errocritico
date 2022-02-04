@@ -98,12 +98,12 @@
 //     import {Icon, Style} from 'ol/style';
 //     import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 //     import {fromLonLat} from 'ol/proj';
-    
-    const rome = new ol.Feature({
-      geometry: new ol.geom.Point(ol.proj.fromLonLat([{{location.longitude}}, {{location.latitude}}])),
+    //{% for x in aurelio.values() %}
+    const {{x['username']}} = new ol.Feature({
+      geometry: new ol.geom.Point(ol.proj.fromLonLat([{{x['local'].longitude}}, {{x['local'].latitude}}])),
     });
     
-    const romeStyle = new ol.style.Style({
+    const {{x['username']}}Style = new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
@@ -113,10 +113,15 @@
       }),
     });
 
-    rome.setStyle(romeStyle);
+    {{x['username']}}.setStyle({{x['username']}}Style);
+    //{% endfor %}
     
     const vectorSource = new ol.source.Vector({
-      features: [rome],
+      features: [
+        //{% for x in aurelio.values() %}
+        {{x['username']}}
+        //{% endfor %}
+      ],
     });
 
     const vectorLayer = new ol.layer.Vector({
