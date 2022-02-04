@@ -88,44 +88,102 @@
 </div>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
   <script type="text/javascript">
-    const iconFeature = new Feature({
-      geometry: new Point([0, 0]),
-      name: 'Null Island',
-      population: 4000,
-      rainfall: 500,
+    const rome = new Feature({
+      geometry: new Point(fromLonLat([12.5, 41.9])),
     });
 
-    const iconStyle = new Style({
-      image: new Icon({
-        anchor: [0.5, 46],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'pixels',
-        src: 'data/icon.png',
-      }),
+    const london = new Feature({
+      geometry: new Point(fromLonLat([-0.12755, 51.507222])),
     });
 
-    iconFeature.setStyle(iconStyle);
+    const madrid = new Feature({
+      geometry: new Point(fromLonLat([-3.683333, 40.4])),
+    });
+    const paris = new Feature({
+      geometry: new Point(fromLonLat([2.353, 48.8566])),
+    });
+    const berlin = new Feature({
+      geometry: new Point(fromLonLat([13.3884, 52.5169])),
+    });
 
+    rome.setStyle(
+      new Style({
+        image: new Icon({
+          color: '#BADA55',
+          crossOrigin: 'anonymous',
+          // For Internet Explorer 11
+          imgSize: [20, 20],
+          src: 'data/square.svg',
+        }),
+      })
+    );
+
+    london.setStyle(
+      new Style({
+        image: new Icon({
+          color: 'rgba(255, 0, 0, .5)',
+          crossOrigin: 'anonymous',
+          src: 'data/bigdot.png',
+          scale: 0.2,
+        }),
+      })
+    );
+
+    madrid.setStyle(
+      new Style({
+        image: new Icon({
+          crossOrigin: 'anonymous',
+          src: 'data/bigdot.png',
+          scale: 0.2,
+        }),
+      })
+    );
+
+    paris.setStyle(
+      new Style({
+        image: new Icon({
+          color: '#8959A8',
+          crossOrigin: 'anonymous',
+          // For Internet Explorer 11
+          imgSize: [20, 20],
+          src: 'data/dot.svg',
+        }),
+      })
+    );
+
+    berlin.setStyle(
+      new Style({
+        image: new Icon({
+          crossOrigin: 'anonymous',
+          // For Internet Explorer 11
+          imgSize: [20, 20],
+          src: 'data/dot.svg',
+        }),
+      })
+    );
     const vectorSource = new VectorSource({
-      features: [iconFeature],
+      features: [rome, london, madrid, paris, berlin],
     });
 
     const vectorLayer = new VectorLayer({
       source: vectorSource,
     });
-    
+
+    const rasterLayer = new TileLayer({
+      source: new TileJSON({
+        url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json?secure=1',
+        crossOrigin: '',
+      }),
+    });
+
     const map = new Map({
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          }), vectorLayer
-        ],
-        target: document.getElementById('map'),
-        view: new View({
-          center: [{{location.longitude}}, {{location.latitude}}],
-          zoom: 11
-        })
-      });
+      layers: [rasterLayer, vectorLayer],
+      target: document.getElementById('map'),
+      view: new View({
+        center: fromLonLat([2.896372, 44.6024]),
+        zoom: 3,
+      }),
+    });
   </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
