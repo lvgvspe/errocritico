@@ -34,48 +34,50 @@
     </style>
   </head>
   <body>
-  <nav class="p-3 mb-3 border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="{{ url_for('index') }}"><img class="rounded-circle" width=64 height=64 src="{{ url_for('static', filename='logo.JPG') }}"></a>
+    <div>
+      <nav class="p-3 mb-3 border-bottom">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{{ url_for('index') }}"><img class="rounded-circle" width=64 height=64 src="{{ url_for('static', filename='logo.JPG') }}"></a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-dark">Início</a></li>
-          <li><a href="{{ url_for('blog.map') }}" class="nav-link px-2 link-secondary">Mapa</a></li>
-        </ul>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-dark">Início</a></li>
+              <li><a href="{{ url_for('blog.map') }}" class="nav-link px-2 link-secondary">Mapa</a></li>
+            </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
-        {% if g.user %}
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ g.user['avatar'] }}" alt="{{ g.user['name'] }}" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="{{ url_for('index') }}">Início</a></li>
-            <li><a class="dropdown-item" href="/profile/{{ g.user['username'] }}">Perfil</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Novo post...</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('auth.settings') }}">Configurações</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a></li>
-          </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+              <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+            {% if g.user %}
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{ g.user['avatar'] }}" alt="{{ g.user['name'] }}" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="{{ url_for('index') }}">Início</a></li>
+                <li><a class="dropdown-item" href="/profile/{{ g.user['username'] }}">Perfil</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Novo post...</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.settings') }}">Configurações</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a></li>
+              </ul>
+            </div>
+            {% else %}
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg" alt="Avatar" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrar</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Entrar</a></li>
+              </ul>
+            </div>
+            {% endif %}
+          </div>
         </div>
-        {% else %}
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://4xucy2kyby51ggkud2tadg3d-wpengine.netdna-ssl.com/wp-content/uploads/sites/37/2017/02/IAFOR-Blank-Avatar-Image.jpg" alt="Avatar" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrar</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Entrar</a></li>
-          </ul>
-        </div>
-        {% endif %}
-      </div>
+      </nav>
     </div>
-  </nav>
-    <div id="map" class="map"><div id="popup container"></div></div>
+    <div id="map" class="map"><div id="popup"></div></div>
 <div class="container">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
