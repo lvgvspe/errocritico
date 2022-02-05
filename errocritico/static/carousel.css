@@ -115,3 +115,13 @@ textarea {
     max-width: 7rem;
     align-self: center;
 }
+
+.popup {
+    margin: 7rem;
+}
+
+@media (max-width: 992px) {
+  .popup {
+      margin: 0;
+  }
+}
