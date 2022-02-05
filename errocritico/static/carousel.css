@@ -117,11 +117,11 @@ textarea {
 }
 
 .popup {
-    margin: 7rem;
+    padding-top: 7rem;
 }
 
 @media (max-width: 992px) {
   .popup {
-      margin: 0;
+      padding-top: 0;
   }
 }
