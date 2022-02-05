@@ -158,4 +158,5 @@ def map():
     return render_template('blog/map.html', aurelio=aurelio, location=location)
 
 @bp.route('/profile/<string:username>/following')
+@login_required
     return render_template('blog/following.html')
