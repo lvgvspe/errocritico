@@ -65,6 +65,6 @@ nav {
 }
 
 .popup {
-    position: fixed;
+    position: relative;
     bottom: 0;
 }
