@@ -156,3 +156,6 @@ def map():
     aurelio = dict(zip(IDs, local))
 
     return render_template('blog/map.html', aurelio=aurelio, location=location)
+
+@bp.route('/profile/<string:username>/following')
+    return render_template('blog/following.html')
