@@ -106,11 +106,11 @@
 //     import {fromLonLat} from 'ol/proj';
     
     {% for x in aurelio.values() %}
-    const {{x['id']}} = new ol.Feature({
+    const {{x['username']}} = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([{{x['local'].longitude}}, {{x['local'].latitude}}])),
       name: '{{x['username']}}',
     });
-    const {{x['id']}}Style = new ol.style.Style({
+    const {{x['username']}}Style = new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 1],
         anchorXUnits: 'fraction',
@@ -119,14 +119,14 @@
         scale: 0.01,
       }),
     });
-    {{x['id']}}.setStyle({{x['id']}}Style);
+    {{x['username']}}.setStyle({{x['username']}}Style);
     
     {% endfor %}
     
     const vectorSource = new ol.source.Vector({
       features: [
         {% for x in aurelio.values() %}
-        {{x['id']}},
+        {{x['username']}},
         {% endfor %}
       ],
     });
