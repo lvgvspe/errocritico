@@ -159,4 +159,12 @@ def map():
 
 @bp.route('/profile/<string:username>/following')
 @login_required
-    return render_template('blog/following.html')
+def following(username):
+    db = get_db()
+    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, avatar, private_profile, private_email, private_zipcode, private_birth, private_gender'
+        ' FROM users WHERE username = %s', (username,)
+    )
+    user = cur.fetchone()
+    return render_template('blog/following.html', user=user)
