@@ -168,8 +168,7 @@
         $(element).popover({
           placement: 'left',
           html: true,
-          content: feature.get('name'),
-          content: feature.get('profile'),
+          content: feature.get('profile') + feature.get('name'),
         });
         $(element).popover('show');
       } else {
