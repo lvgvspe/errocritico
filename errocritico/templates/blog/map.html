@@ -109,7 +109,7 @@
     const {{x['username']}} = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([{{x['local'].longitude}}, {{x['local'].latitude}}])),
       name: '{{x['name']}}',
-      profile: '<a href='/profile/{{x['username']}}'>{{x['username']}}</a>',
+      profile: '<a href="/profile/{{x['username']}}">{{x['username']}}</a>',
     });
     const {{x['username']}}Style = new ol.style.Style({
       image: new ol.style.Icon({
