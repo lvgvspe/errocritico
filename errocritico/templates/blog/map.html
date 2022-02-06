@@ -163,9 +163,9 @@
         return feature;
       });
       if (feature) {
-        popup.setPosition(evt.pixel);
+        popup.setPosition(evt.coordinate);
         $(element).popover({
-          placement: 'top',
+          placement: 'bottom',
           html: true,
           content: feature.get('name'),
         });
