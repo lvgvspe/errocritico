@@ -124,7 +124,6 @@ def delete(id, check_user=True):
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute('DELETE FROM users WHERE id = %s', (id,))
         db.commit()
-        os.remove(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
 
 
     return redirect(url_for('auth.login'))

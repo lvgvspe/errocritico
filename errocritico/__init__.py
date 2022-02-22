@@ -10,7 +10,6 @@ def create_app(test_config=None):
     CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'errocritico.sqlite'),
         MAX_CONTENT_LENGTH=5*1000*1000
     )
 
@@ -20,12 +19,6 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
     # a simple page that says hello
     @app.route('/hello')

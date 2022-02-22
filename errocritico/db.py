@@ -10,7 +10,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 def get_db():
     if 'db' not in g:
-        g.db = psycopg2.connect(DATABASE_URL, sslmode='require')
+        g.db = psycopg2.connect(DATABASE_URL)
     return g.db
 
 
