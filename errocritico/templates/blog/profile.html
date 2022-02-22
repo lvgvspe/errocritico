@@ -9,14 +9,12 @@
     <img class="rounded-circle" src="{{ u['avatar'] }}" alt="Foto de perfil de {{ u['name'] }}">
     {% if g.user['id'] == u['id'] %}
     <br>
-    <div class="dropdown">
-      <button class="btn btn-secondary btn-avatar" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" type="button">Enviar foto</button>
-      <div class="dropdown-menu" aria-labelledby="dropdownUser1">
-        <form method=post enctype=multipart/form-data>
-          <input type=file name=file>
-          <input class="btn btn-primary" type=submit value=Enviar>
-        </form>
-      </div>
+    <button class="btn btn-secondary btn-avatar" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" type="button">Enviar foto</button>
+    <div class="dropdown-menu" aria-labelledby="dropdownUser1">
+      <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input class="btn btn-primary" type=submit value=Enviar>
+      </form>
     </div>
     {% endif %}
   </div><!-- col -->
