@@ -1,3 +1,4 @@
+import os
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -9,6 +10,9 @@ from datetime import date
 from geopy.geocoders import Nominatim
 import urllib.request,  json
 import psycopg2.extras
+import cloudinary
+import cloudinary.uploader
+from werkzeug.exceptions import RequestEntityTooLarge
 
 bp = Blueprint('blog', __name__)
 
@@ -106,26 +110,58 @@ def delete(id):
     db.commit()
     return redirect(url_for('blog.index'))
 
-@bp.route('/profile/<string:username>')
+cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), api_secret=os.getenv('API_SECRET'))
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif'}
+
+@bp.route('/profile/<string:username>', methods=('GET', 'POST',))
 @login_required
 def profile(username):
-    db = get_db()
-    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute(
-        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, avatar, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM users WHERE username = %s', (username,)
-    )
-    user = cur.fetchall()
-    cur2 = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur2.execute(
-        'SELECT p.id, title, body, created, author_id, username, avatar'
-        ' FROM posts p JOIN users u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    )
-    posts = cur2.fetchall()
-    for u in user:
-        age = date.today().year - int(u['birth'].split('-')[0]) - ((date.today().month, date.today().day) < (int(u['birth'].split('-')[1]), int(u['birth'].split('-')[2])))
-    return render_template('blog/profile.html', user=user, posts=posts, age=age)
+    if request.method == 'GET':
+        db = get_db()
+        cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute(
+            'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, avatar, private_profile, private_email, private_zipcode, private_birth, private_gender'
+            ' FROM users WHERE username = %s', (username,)
+        )
+        user = cur.fetchall()
+        cur2 = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur2.execute(
+            'SELECT p.id, title, body, created, author_id, username, avatar'
+            ' FROM posts p JOIN users u ON p.author_id = u.id'
+            ' ORDER BY created DESC'
+        )
+        posts = cur2.fetchall()
+        for u in user:
+            age = date.today().year - int(u['birth'].split('-')[0]) - ((date.today().month, date.today().day) < (int(u['birth'].split('-')[1]), int(u['birth'].split('-')[2])))
+    if request.method == 'POST':
+        try:
+              # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            # If the user does not select a file, the browser submits an
+            # empty file without a filename.
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                upload_result = cloudinary.uploader.upload(file, tags = g.user['username'], public_id = f"{g.user['username']}/{g.user['username']}")
+                db = get_db()
+                cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+                cur.execute(
+                    'UPDATE users SET avatar = %s'
+                    ' WHERE id = %s',
+                    (upload_result['secure_url'], g.user['id'])
+                )
+                db.commit()
+                return redirect(url_for('blog.profile', username=g.user['username']))
+        except RequestEntityTooLarge:
+            flash('Arquivo deve ter 5mb ou menos')
+    return render_template('blog/profile.html', user=user, posts=posts, age=age, username=g.user['username'])
 
 @bp.route('/map')
 @login_required

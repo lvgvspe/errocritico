@@ -9,7 +9,15 @@
     <img class="rounded-circle" src="{{ u['avatar'] }}" alt="Foto de perfil de {{ u['name'] }}">
     {% if g.user['id'] == u['id'] %}
     <br>
-    <button class="btn btn-secondary btn-avatar" type="button" onclick="window.location.href='{{ url_for ('uploader.upload_avatar') }}'">Enviar foto</button>
+    <div class="dropdown">
+      <button class="btn btn-secondary btn-avatar" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" type="button">Enviar foto</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownUser1">
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file>
+          <input class="btn btn-primary" type=submit value=Enviar>
+        </form>
+      </div>
+    </div>
     {% endif %}
   </div><!-- col -->
 <div class="col-lg-3 profile-info">
