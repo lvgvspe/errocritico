@@ -192,3 +192,15 @@ def map():
     aurelio = dict(zip(IDs, local))
 
     return render_template('blog/map.html', aurelio=aurelio, location=location)
+
+@bp.route('/post/<int:id>')
+def post(id):
+    db = get_db()
+    cur=db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(
+        'SELECT p.id, title, body, created, author_id, username, avatar'
+        ' FROM posts p JOIN users u ON p.author_id = u.id WHERE p.id = %s',
+        (id,)
+    )
+    post = cur.fetchone()
+    return render_template('blog/post.html', post=post)
