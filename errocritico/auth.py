@@ -1,18 +1,16 @@
 import functools
 import os
-
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from werkzeug.exceptions import abort
-
 from errocritico.db import get_db
-
 import errocritico as app
-
 import psycopg2.extras
+import cloudinary.api
+
+cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), api_secret=os.getenv('API_SECRET'))
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -122,8 +120,11 @@ def delete(id, check_user=True):
     else:
         db = get_db()
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute('DELETE FROM posts WHERE author_id = %s', (id,))
         cur.execute('DELETE FROM users WHERE id = %s', (id,))
         db.commit()
+        cloudinary.api.delete_resources_by_tag(g.user['username'])
+        cloudinary.api.delete_folder(g.user['username'])
 
 
     return redirect(url_for('auth.login'))

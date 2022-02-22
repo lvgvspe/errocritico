@@ -5,7 +5,6 @@ Blueprint, flash, g, request, redirect, url_for, render_template,
 from werkzeug.exceptions import RequestEntityTooLarge
 from errocritico.db import get_db
 import psycopg2.extras
-import cloudinary
 import cloudinary.uploader
 
 bp = Blueprint('uploader', __name__)
@@ -31,8 +30,7 @@ def upload_avatar():
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                upload_result = cloudinary.uploader.upload(file, public_id = g.user['username'])
-                #file.save(os.path.join(os.path.abspath(os.curdir), 'errocritico/static/avatars', str(g.user['id'])))
+                upload_result = cloudinary.uploader.upload(file, tags = g.user['username'], public_id = f"{g.user['username']}/{g.user['username']}")
                 db = get_db()
                 cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                 cur.execute(
