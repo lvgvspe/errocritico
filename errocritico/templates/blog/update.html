@@ -11,7 +11,7 @@
     <label for="title">Título</label>
     <input name="title" id="title"
       value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Conteúdo</label>
+    <label for="body">Conteúdo (suporta Markdown)</label>
     <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
     <div class="buttons">
     <button class="btn btn-primary" type="submit">Salvar</button>

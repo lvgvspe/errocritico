@@ -4,17 +4,17 @@
 {% block content %}
 <div class="container marketing">
     <div class="row" data-masonry='{"percentPosition": true }'>
-        <div class="col-lg-4">
-        <img class="bd-placeholder-img rounded-circle" src="{{ post['avatar'] }}" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/>
+        <div class="col-12">
+        <img class="bd-placeholder-img rounded-circle profile-img" src="{{ post['avatar'] }}" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/>
 
         <h2>{% block title %}{{ post['title'] }}{% endblock %}</h2>
         <p>by <a href="{{ url_for('blog.profile', username=post['username']) }}">{{ post['username'] }}</a> on {{ post['created'].strftime('%Y-%m-%d') }}</p>
-        <p>{{ post['body'] | safe }}</p>
+        <p>{{ markdown.markdown(post['body']) | safe }}</p>
         {% if g.user['id'] == post['author_id'] %}
         <a class="btn btn-secondary" href="{{ url_for('blog.update', id=post['id']) }}">Editar</a>
         {% endif %}
-        </div><!-- /.col-lg-4 -->
+        </div><!-- /.col -->
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
     </div><!-- /.row -->
-</div><!-- .container -->
+</div><!-- /.container -->
 {% endblock %}

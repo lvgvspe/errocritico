@@ -9,7 +9,7 @@
   <form method="post">
     <label for="title">Título</label>
     <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="body">Conteúdo</label>
+    <label for="body">Conteúdo (suporta Markdown)</label>
     <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
     <div>
     <button class="btn btn-primary" type="submit">Salvar</button>

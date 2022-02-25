@@ -1,4 +1,5 @@
 import os
+import markdown
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -26,7 +27,30 @@ def index():
         ' ORDER BY created DESC'
     )
     posts = cur.fetchall()
-    return render_template('blog/index.html', posts=posts)
+    cur2 = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur2.execute(
+        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
+        ' FROM users'
+    )
+    users = cur2.fetchall()
+
+    local = []
+    IDs = []
+
+    for u in users:
+        if len(u['zipcode']) == 8:
+            with urllib.request.urlopen(f"https://viacep.com.br/ws/{u['zipcode']}/json") as url:
+                address = json.loads(url.read().decode())
+                if address.get('erro'):
+                    pass
+                else:
+                    geolocator = Nominatim(user_agent="test_app")
+                    location = geolocator.geocode(address['logradouro'].split('-')[0] + ", " + address['bairro'] + ", " + address['localidade'])
+                    local.append({'local': location, 'username': u['username']})
+                    IDs.append(u['id'])
+
+    aurelio = dict(zip(IDs, local))
+    return render_template('blog/index.html', posts=posts, markdown=markdown, aurelio=aurelio, location=location)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -161,37 +185,7 @@ def profile(username):
                 return redirect(url_for('blog.profile', username=g.user['username']))
         except RequestEntityTooLarge:
             flash('Arquivo deve ter 5mb ou menos')
-    return render_template('blog/profile.html', user=user, posts=posts, age=age, username=g.user['username'])
-
-@bp.route('/map')
-@login_required
-def map():
-    db = get_db()
-    cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute(
-        'SELECT id, username, password, email, name, surname, location, country, state, zipcode, aboutme, birth, gender, private_profile, private_email, private_zipcode, private_birth, private_gender'
-        ' FROM users'
-    )
-    users = cur.fetchall()
-
-    local = []
-    IDs = []
-
-    for u in users:
-        if len(u['zipcode']) == 8:
-            with urllib.request.urlopen(f"https://viacep.com.br/ws/{u['zipcode']}/json") as url:
-                address = json.loads(url.read().decode())
-                if address.get('erro'):
-                    pass
-                else:
-                    geolocator = Nominatim(user_agent="test_app")
-                    location = geolocator.geocode(address['logradouro'].split('-')[0] + ", " + address['bairro'] + ", " + address['localidade'])
-                    local.append({'local': location, 'username': u['username']})
-                    IDs.append(u['id'])
-
-    aurelio = dict(zip(IDs, local))
-
-    return render_template('blog/map.html', aurelio=aurelio, location=location)
+    return render_template('blog/profile.html', user=user, posts=posts, age=age, username=g.user['username'], markdown=markdown)
 
 @bp.route('/post/<int:id>')
 def post(id):
@@ -203,4 +197,4 @@ def post(id):
         (id,)
     )
     post = cur.fetchone()
-    return render_template('blog/post.html', post=post)
+    return render_template('blog/post.html', post=post, markdown=markdown)
