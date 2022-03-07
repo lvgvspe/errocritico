@@ -6,6 +6,7 @@ Flask==2.0.3
 Flask-Cors==3.0.10
 geographiclib==1.52
 geopy==2.2.0
+gunicorn==20.1.0
 itsdangerous==2.1.0
 Jinja2==3.0.3
 Markdown==3.3.6
