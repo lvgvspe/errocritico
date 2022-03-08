@@ -88,7 +88,7 @@ const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
 if (feature) {
   popup.setPosition(evt.coordinate);
   $(element).popover({
-    placement: 'left',
+    placement: 'top',
     html: true,
     content: feature.get('profile'),
   });
