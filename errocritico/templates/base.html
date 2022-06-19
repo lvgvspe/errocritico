@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - Erro Crítico</title>
     <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon2.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='logo2.png') }}">
     
 
     <style>
@@ -35,13 +35,8 @@
   <nav class="p-3 mb-3" id="myHeader">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="{{ url_for('index') }}"><img width=64 height=64 src="{{ url_for('static', filename='logo2.png') }}"></a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-secondary">Início</a></li>
-        </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <a href="{{ url_for('index') }}"><img width=40 height=40 src="{{ url_for('static', filename='logo2.png') }}"></a>
+        <form class="col-6 col-lg-6 me-lg-auto ms-lg-auto mb-3 mb-lg-0 me-lg-3">
           <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
         {% if g.user %}
@@ -82,9 +77,9 @@
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
       <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        <img class="bi" width="24" height="24" src="{{ url_for('static', filename='icon2.png') }}">
+        <img class="bi" width="24" height="24" src="{{ url_for('static', filename='logo2.png') }}">
       </a>
-      <span class="text-muted">&copy; 2022 Erro Crítico RPG</span>
+      <span class="text-muted">&copy; 2022 Erro Crítico</span>
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
