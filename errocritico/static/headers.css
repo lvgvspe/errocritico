@@ -1,11 +1,6 @@
 nav {
     background-color: #ffffff;
 }
-@media (max-width: 992px) {
-  nav {
-      box-shadow: none;
-  }
-}
 
 .b-example-divider {
   height: 3rem;
@@ -48,18 +43,8 @@ nav {
   z-index: 2;
   box-shadow: 0px 3px 15px #2b2430;
 }
-@media (max-width: 992px) {
-  .sticky {
-      position: initial;
-  }
-}
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
 .sticky + .content {
   padding-top: 7rem;
-}
-@media (max-width: 992px) {
-  .sticky + .content {
-      padding-top: 0;
-  }
 }
